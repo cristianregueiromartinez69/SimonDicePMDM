@@ -6,13 +6,19 @@ import android.text.style.BackgroundColorSpan
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.maps.model.Circle
 import com.pmdm.cristian.botonescolores.ui.theme.BotonesColoresTheme
 
 class MainActivity : ComponentActivity() {
@@ -52,7 +59,8 @@ fun interfazColores(modifier: Modifier = Modifier) {
             .padding(top = 150.dp, start = 25.dp)){
 
         Row {
-            Button(onClick = { color_texto = "Rojo" },
+            Button(onClick = {color_texto = "Rojo"
+                             },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Red,
                 )) {
@@ -60,8 +68,10 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
 
 
+
             }
-            Button(onClick = { color_texto = "Verde" },
+            Button(onClick = { color_texto = "Verde"
+                             },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Green,
                 )) {
@@ -72,13 +82,15 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
         }
         Row{
-            Button(onClick = { color_texto = "Azul" },
+            Button(onClick = { color_texto = "Azul"
+                             },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Blue,
                 )) {
                 Text(text = "Azul")
             }
-            Button(onClick = { color_texto = "Amarillo" },
+            Button(onClick = { color_texto = "Amarillo"
+                             },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Yellow,
                     contentColor = Color.Black
