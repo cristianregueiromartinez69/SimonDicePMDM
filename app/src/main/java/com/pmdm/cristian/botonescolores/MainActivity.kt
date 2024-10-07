@@ -6,7 +6,9 @@ import android.text.style.BackgroundColorSpan
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -18,9 +20,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.pmdm.cristian.botonescolores.ui.theme.BotonesColoresTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,38 +40,59 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun interfazColores() {
+fun interfazColores(modifier: Modifier = Modifier) {
 
     var color_texto by remember { mutableStateOf("") }
 
-    Column {
+    initialText()
+    Column (verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(70.dp)
+            .padding(top = 150.dp, start = 25.dp)){
 
-        Button(onClick = { color_texto = "Rojo" },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red,
-            )) {
-            Text(text = "Rojo")
+        Row {
+            Button(onClick = { color_texto = "Rojo" },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
+                )) {
+                Text(text = "Rojo")
+
+
+
+            }
+            Button(onClick = { color_texto = "Verde" },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Green,
+                )) {
+                Text(text = "Verde")
+
+
+            }
 
         }
-        Button(onClick = { color_texto = "Verde" },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Green,
-            )) {
-            Text(text = "Verde")
+        Row{
+            Button(onClick = { color_texto = "Azul" },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Blue,
+                )) {
+                Text(text = "Azul")
+            }
+            Button(onClick = { color_texto = "Amarillo" },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Yellow,
+                    contentColor = Color.Black
+                )) {
+                Text(text = "Amarillo")
+            }
+
         }
-        Button(onClick = { color_texto = "Azul" },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Blue,
-            )) {
-            Text(text = "Azul")
-        }
-        Button(onClick = { color_texto = "Amarillo" },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Yellow,
-                contentColor = Color.Black
-            )) {
-            Text(text = "Amarillo")
-        }
+
+        confirmationColor(color_texto)
+
+
+
+
 
 
 
@@ -74,5 +101,68 @@ fun interfazColores() {
 
 
 
+}
+
+@Composable
+fun initialText(){
+
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(
+            start = 50.dp,
+            top = 100.dp
+        )) {
+        Text(
+            text = "ELIGE UN COLOR!",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+    }
+
+}
+
+@Composable
+fun confirmationColor(name:String){
+
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(
+            top = 80.dp,
+            end = 20.dp
+        )) {
+
+        if(name.equals("Rojo")){
+            Text(
+                text = "Has pulsado el boton $name",
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+            )
+        }
+        else if (name.equals("Verde")){
+            Text(
+                text = "Has pulsado el boton $name",
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+
+
+            )
+        }
+        else if (name.equals("Amarillo")){
+            Text(
+                text = "Has pulsado el boton $name",
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+
+            )
+        }
+        else if (name.equals("Azul")){
+            Text(
+                text = "Has pulsado el boton $name",
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+
+            )
+        }
+    }
 }
 
