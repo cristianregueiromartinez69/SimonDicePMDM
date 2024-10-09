@@ -7,8 +7,10 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,6 +36,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,109 +66,126 @@ fun interfazColores(modifier: Modifier = Modifier) {
     var record by remember { mutableStateOf(0) }
     recordJugador.saveRecord(record)
 
-    Column {
-        initialText()
-        showRecord(record)
-    }
-
-
-    Column(
-
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(70.dp)
-            .padding(top = 150.dp, start = 15.dp)
-    ) {
-
-        Row {
-            Button(
-                onClick = {
-                    color_texto = "Rojo"
-                    lista_colores.add(Colores.ROJO.valorColor)
-                    record++
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Red,
-                ),
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .padding(3.dp)
-                    .size(95.dp)
-            ) {
-
-            }
-
-            Button(
-                onClick = {
-                    color_texto = "Verde"
-                    lista_colores.add(Colores.VERDE.valorColor)
-                    record++
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Green,
-                ),
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .padding(3.dp)
-                    .size(95.dp)
-            ) {
-
-            }
-        }
-
-        Row {
-            Button(
-                onClick = {
-                    color_texto = "Azul"
-                    lista_colores.add(Colores.AZUL.valorColor)
-                    record++
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Blue,
-                ),
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .padding(3.dp)
-                    .size(95.dp)
-            ) {
-
-            }
-
-            Button(
-                onClick = {
-                    color_texto = "Amarillo"
-                    lista_colores.add(Colores.AMARILLO.valorColor)
-                    record++
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Yellow,
-                    contentColor = Color.Black
-                ),
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .padding(3.dp)
-                    .size(95.dp)
-            ) {
-
-            }
-        }
-
-        Text(
-
-            text = "Ronda: ",
-
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(top = 100.dp)
-
+    Box (modifier = Modifier
+        .fillMaxSize()
+        ){
+        val backgroundImage = painterResource(id = R.drawable.fondo)
+        Image(
+            painter = backgroundImage,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
         )
 
+        Column {
+            initialText()
+            showRecord(record)
+        }
 
+
+        Column(
+
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(70.dp)
+                .padding(top = 190.dp, start = 15.dp)
+        ) {
+
+            Row {
+
+                Button(
+                    onClick = {
+                        color_texto = "Rojo"
+                        lista_colores.add(Colores.ROJO.valorColor)
+                        record++
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Red,
+                    ),
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .padding(3.dp)
+                        .size(95.dp)
+                ) {
+
+                }
+
+
+                Button(
+                    onClick = {
+                        color_texto = "Verde"
+                        lista_colores.add(Colores.VERDE.valorColor)
+                        record++
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Green,
+                    ),
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .padding(3.dp)
+                        .size(95.dp)
+                ) {
+
+                }
+            }
+
+            Row {
+                Button(
+                    onClick = {
+                        color_texto = "Azul"
+                        lista_colores.add(Colores.AZUL.valorColor)
+                        record++
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Blue,
+                    ),
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .padding(3.dp)
+                        .size(95.dp)
+                ) {
+
+                }
+
+                Button(
+                    onClick = {
+                        color_texto = "Amarillo"
+                        lista_colores.add(Colores.AMARILLO.valorColor)
+                        record++
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Yellow,
+                        contentColor = Color.Black
+                    ),
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .padding(3.dp)
+                        .size(95.dp)
+                ) {
+
+                }
+            }
+
+            Text(
+
+                text = "Ronda: ",
+
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .padding(top = 100.dp)
+
+            )
+
+
+        }
+        Log.d("Colores", color_texto)
     }
-    Log.d("Colores", color_texto)
+
 }
+
+
 
 @Composable
 fun initialText() {
@@ -174,7 +195,7 @@ fun initialText() {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(
             start = 90.dp,
-            top = 100.dp
+            top = 80.dp
         )
     ) {
         Text(
@@ -193,7 +214,7 @@ fun showRecord(record:Int){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(top = 10.dp, start = 130.dp)) {
+            .padding(top = 40.dp, start = 130.dp)) {
 
         Text(text = "Record: $record",
             fontSize = 25.sp,
