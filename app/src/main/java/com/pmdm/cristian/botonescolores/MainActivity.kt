@@ -43,6 +43,8 @@ import com.google.android.gms.maps.model.Circle
 import com.pmdm.cristian.botonescolores.ui.theme.BotonesColoresTheme
 import com.pmdm.cristian.botonescolores.Colores
 
+val recordJugador = DataRecord(0)
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +59,11 @@ class MainActivity : ComponentActivity() {
 fun interfazColores(modifier: Modifier = Modifier) {
     var color_texto by remember { mutableStateOf("") }
     var lista_colores = remember { mutableStateListOf<Int>() }
+    var record by remember { mutableStateOf(0) }
+    recordJugador.saveRecord(record)
+
     initialText()
+    showRecord(record)
 
     Column(
 
@@ -73,6 +79,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 onClick = {
                     color_texto = "Rojo"
                     lista_colores.add(Colores.ROJO.valorColor)
+                    record++
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Red,
@@ -89,6 +96,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 onClick = {
                     color_texto = "Verde"
                     lista_colores.add(Colores.VERDE.valorColor)
+                    record++
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Green,
@@ -107,6 +115,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 onClick = {
                     color_texto = "Azul"
                     lista_colores.add(Colores.AZUL.valorColor)
+                    record++
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Blue,
@@ -123,6 +132,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 onClick = {
                     color_texto = "Amarillo"
                     lista_colores.add(Colores.AMARILLO.valorColor)
+                    record++
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Yellow,
@@ -140,6 +150,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
         Text(
 
             text = "Color seleccionado: $color_texto",
+
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             modifier = Modifier
@@ -154,8 +165,10 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 .padding(top = 30.dp))
         lista_colores.forEach { color ->
             Text(text = color.toString())
+            Log.d("NumeroColores: ", color.toString())
         }
     }
+    Log.d("Colores", color_texto)
 }
 
 @Composable
@@ -174,6 +187,24 @@ fun initialText() {
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )
+
+    }
+
+}
+
+@Composable
+fun showRecord(record:Int){
+
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(top = 10.dp, start = 40.dp)) {
+
+        Text(text = "Record: $record",
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold)
+
+        Log.d("Record", recordJugador.record.toString())
 
     }
 
