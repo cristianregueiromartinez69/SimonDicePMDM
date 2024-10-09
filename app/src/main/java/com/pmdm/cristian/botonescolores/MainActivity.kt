@@ -62,8 +62,11 @@ fun interfazColores(modifier: Modifier = Modifier) {
     var record by remember { mutableStateOf(0) }
     recordJugador.saveRecord(record)
 
-    initialText()
-    showRecord(record)
+    Column {
+        initialText()
+        showRecord(record)
+    }
+
 
     Column(
 
@@ -71,7 +74,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(70.dp)
-            .padding(top = 150.dp, start = 25.dp)
+            .padding(top = 150.dp, start = 15.dp)
     ) {
 
         Row {
@@ -87,7 +90,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .clip(CircleShape)
                     .padding(3.dp)
-                    .size(70.dp)
+                    .size(95.dp)
             ) {
 
             }
@@ -104,7 +107,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .clip(CircleShape)
                     .padding(3.dp)
-                    .size(70.dp)
+                    .size(95.dp)
             ) {
 
             }
@@ -123,7 +126,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .clip(CircleShape)
                     .padding(3.dp)
-                    .size(70.dp)
+                    .size(95.dp)
             ) {
 
             }
@@ -141,7 +144,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .clip(CircleShape)
                     .padding(3.dp)
-                    .size(70.dp)
+                    .size(95.dp)
             ) {
 
             }
@@ -149,24 +152,16 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
         Text(
 
-            text = "Color seleccionado: $color_texto",
+            text = "Ronda: ",
 
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             modifier = Modifier
-                .padding(top = 30.dp)
+                .padding(top = 100.dp)
 
         )
 
-        Text(text = "Numeros de los colores seleccionados:",
-            fontStyle = FontStyle.Italic,
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(top = 30.dp))
-        lista_colores.forEach { color ->
-            Text(text = color.toString())
-            Log.d("NumeroColores: ", color.toString())
-        }
+
     }
     Log.d("Colores", color_texto)
 }
@@ -198,7 +193,7 @@ fun showRecord(record:Int){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(top = 10.dp, start = 40.dp)) {
+            .padding(top = 10.dp, start = 130.dp)) {
 
         Text(text = "Record: $record",
             fontSize = 25.sp,
