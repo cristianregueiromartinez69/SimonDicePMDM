@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -64,6 +66,9 @@ fun interfazColores(modifier: Modifier = Modifier) {
     var color_texto by remember { mutableStateOf("") }
     var lista_colores = remember { mutableStateListOf<Int>() }
     var record by remember { mutableStateOf(0) }
+    val isStartButtonPressed = remember { mutableStateOf(true) }
+    var numero_ronda by remember { mutableStateOf(0) }
+
     recordJugador.saveRecord(record)
 
     Box (modifier = Modifier
@@ -178,6 +183,8 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
             )
 
+            showButtonStart(isStartButtonPressed)
+
 
         }
         Log.d("Colores", color_texto)
@@ -225,4 +232,37 @@ fun showRecord(record:Int){
     }
 
 }
+
+@Composable
+fun showButtonStart(isButtonvisible:MutableState<Boolean>){
+    val rosa = Color(0xFFFF00C9)
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(top = 40.dp))
+            {
+
+        if(isButtonvisible.value){
+            Button(onClick = { isButtonvisible.value = false },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = rosa,
+                    contentColor = Color.Black
+                ),
+                modifier = Modifier
+                    .size(145.dp)
+                    .clip(RectangleShape)
+            ) {
+                Text(text = "Start",
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold)
+
+            }
+        }
+
+
+    }
+
+}
+
+
 
