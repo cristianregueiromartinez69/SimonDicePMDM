@@ -267,4 +267,15 @@ return isButtonvisible.value
 }
 
 
-
+/**
+ * variables a necesitar logica simon dice:
+ * 1. booleanos para saber si ganaste 1 ronda o no
+ * 2. variable incremento para ir aumentando el numero de colores a iluminar
+ * 3. lista que se va limpiando a cada ronda y que guarda los colores iluminados
+ *
+ * logica:
+ * 1. a cada ronda, se ilumina un color y tienes que pulsarlo en el orden establecido
+ * 2. por cada ronda se aumenta en 1
+ * 3. si ganas aumenta la ronda y el record
+ * 4. comparamos 2 listas, las que pulsas y las que guardas colores, si hay coincidencias, ganaste, si no, perdiste
+ */
