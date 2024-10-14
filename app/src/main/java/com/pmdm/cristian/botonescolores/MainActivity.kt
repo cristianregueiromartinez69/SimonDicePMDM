@@ -183,7 +183,9 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
             )
 
-            showButtonStart(isStartButtonPressed)
+            if(!showButtonStart(isStartButtonPressed)){
+                Log.d("Ronda", "Pulsaste start")
+            }
 
 
         }
@@ -234,7 +236,7 @@ fun showRecord(record:Int){
 }
 
 @Composable
-fun showButtonStart(isButtonvisible:MutableState<Boolean>){
+fun showButtonStart(isButtonvisible:MutableState<Boolean>):Boolean {
     val rosa = Color(0xFFFF00C9)
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -261,7 +263,7 @@ fun showButtonStart(isButtonvisible:MutableState<Boolean>){
 
 
     }
-
+return isButtonvisible.value
 }
 
 
