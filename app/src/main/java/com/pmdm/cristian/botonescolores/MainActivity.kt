@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -189,7 +190,16 @@ fun interfazColores(modifier: Modifier = Modifier) {
             )
 
             if(!showButtonStart(isStartButtonPressed)){
-                Log.d("Ronda", "Pulsaste start")
+
+                showToast(secuencia = secuencia, message = "Teclea la secuencia correcta")
+
+                if(winOrLose(secuencia,lista_colores)){
+                    showWin(context = LocalContext.current, message = "Has ganado")
+                }else{
+                    showLose(context = LocalContext.current, message = "Has perdido")
+
+                }
+
             }
 
 
@@ -276,7 +286,8 @@ fun winOrLose(secuencia:MutableList<Int>,lista_colores:MutableList<Int>):Boolean
     return secuencia == lista_colores
 }
 
-fun showToast(context: Context, secuencia:MutableList<Int>, message: String,duration: Int = Toast.LENGTH_SHORT){
+@Composable
+fun showToast(context: Context = LocalContext.current, secuencia:MutableList<Int>, message: String,duration: Int = Toast.LENGTH_LONG){
     val random = Random
     for (i in 1..5){
             secuencia.add(random.nextInt(4) + 1)
