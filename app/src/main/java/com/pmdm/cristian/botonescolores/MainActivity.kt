@@ -72,6 +72,8 @@ fun interfazColores(modifier: Modifier = Modifier) {
     val isStartButtonPressed = remember { mutableStateOf(true) }
     var numero_ronda by remember { mutableStateOf(0) }
 
+    var secuencia by remember { mutableStateOf(mutableListOf<Int>()) }
+
     recordJugador.saveRecord(record)
 
     Box (modifier = Modifier
@@ -267,6 +269,11 @@ fun showButtonStart(isButtonvisible:MutableState<Boolean>):Boolean {
 
     }
 return isButtonvisible.value
+}
+
+fun winOrLose(secuencia:MutableList<Int>,lista_colores:MutableList<Int>):Boolean{
+
+    return secuencia == lista_colores
 }
 
 fun showToast(context: Context, secuencia:MutableList<Int>, message: String,duration: Int = Toast.LENGTH_SHORT){
