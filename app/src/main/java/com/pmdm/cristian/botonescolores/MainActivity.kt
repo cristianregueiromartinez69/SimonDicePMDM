@@ -279,3 +279,12 @@ return isButtonvisible.value
  * 3. si ganas aumenta la ronda y el record
  * 4. comparamos 2 listas, las que pulsas y las que guardas colores, si hay coincidencias, ganaste, si no, perdiste
  */
+
+/**
+ * Todo: Una rama nueva
+ * 1. Inicializar una secuencia de 5 numeros randoms entre (1-4)
+ * 2. una toast muestra la secuencia con un periodo corto
+ * 3. El usuario marca la secuencia
+ * 4. Se comprueba en cada click si coincide
+ * 5. Si falla game over sale una toast game over, si llega al final sin fallar congratulations
+ */
