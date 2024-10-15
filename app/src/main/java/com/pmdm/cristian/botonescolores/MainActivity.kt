@@ -269,14 +269,23 @@ fun showButtonStart(isButtonvisible:MutableState<Boolean>):Boolean {
 return isButtonvisible.value
 }
 
-fun showToast(context: Context, message: String,duration: Int = Toast.LENGTH_SHORT){
-    val secuencia = mutableListOf<Int>()
+fun showToast(context: Context, secuencia:MutableList<Int>, message: String,duration: Int = Toast.LENGTH_SHORT){
     val random = Random
     for (i in 1..5){
             secuencia.add(random.nextInt(4) + 1)
     }
     Toast.makeText(context,secuencia.toString(),duration).show()
 
+}
+
+fun showLose(context: Context, message: String,duration: Int = Toast.LENGTH_LONG){
+
+    Toast.makeText(context,message,duration).show()
+}
+
+fun showWin(context: Context, message: String,duration: Int = Toast.LENGTH_LONG){
+
+    Toast.makeText(context,message,duration).show()
 }
 
 /**
