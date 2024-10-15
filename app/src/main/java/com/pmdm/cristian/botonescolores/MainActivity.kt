@@ -1,9 +1,11 @@
 package com.pmdm.cristian.botonescolores
 
+import android.content.Context
 import android.os.Bundle
 import android.provider.CalendarContract.Colors
 import android.text.style.BackgroundColorSpan
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -48,6 +50,7 @@ import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.model.Circle
 import com.pmdm.cristian.botonescolores.ui.theme.BotonesColoresTheme
 import com.pmdm.cristian.botonescolores.Colores
+import kotlin.random.Random
 
 val recordJugador = DataRecord(0)
 
@@ -266,6 +269,15 @@ fun showButtonStart(isButtonvisible:MutableState<Boolean>):Boolean {
 return isButtonvisible.value
 }
 
+fun showToast(context: Context, message: String,duration: Int = Toast.LENGTH_SHORT){
+    val secuencia = mutableListOf<Int>()
+    val random = Random
+    for (i in 1..5){
+            secuencia.add(random.nextInt(4) + 1)
+    }
+    Toast.makeText(context,secuencia.toString(),duration).show()
+
+}
 
 /**
  * variables a necesitar logica simon dice:
