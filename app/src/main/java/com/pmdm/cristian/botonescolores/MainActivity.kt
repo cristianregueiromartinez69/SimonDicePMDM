@@ -72,6 +72,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
     var record by remember { mutableStateOf(0) }
     val isStartButtonPressed = remember { mutableStateOf(true) }
     var numero_ronda by remember { mutableStateOf(0) }
+    var presioneStart by remember { mutableStateOf(false) }
 
     var secuencia by remember { mutableStateOf(mutableListOf<Int>()) }
 
@@ -109,7 +110,6 @@ fun interfazColores(modifier: Modifier = Modifier) {
                     onClick = {
                         color_texto = "Rojo"
                         lista_colores.add(Colores.ROJO.valorColor)
-                        record++
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Red,
@@ -127,7 +127,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                     onClick = {
                         color_texto = "Verde"
                         lista_colores.add(Colores.VERDE.valorColor)
-                        record++
+
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Green,
@@ -146,7 +146,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                     onClick = {
                         color_texto = "Azul"
                         lista_colores.add(Colores.AZUL.valorColor)
-                        record++
+
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Blue,
@@ -163,7 +163,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
                     onClick = {
                         color_texto = "Amarillo"
                         lista_colores.add(Colores.AMARILLO.valorColor)
-                        record++
+
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Yellow,
@@ -180,7 +180,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
             Text(
 
-                text = "Ronda: ",
+                text = "Ronda: $numero_ronda",
 
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
@@ -191,13 +191,22 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
             if(!showButtonStart(isStartButtonPressed)){
 
-                showToast(secuencia = secuencia, message = "Teclea la secuencia correcta")
+                if(!presioneStart){
+                    showToast(secuencia = secuencia, message = "Teclea la secuencia correcta")
+                    presioneStart = true
+                }
 
+
+            }
+            if(lista_colores.size == 5){
                 if(winOrLose(secuencia,lista_colores)){
                     showWin(context = LocalContext.current, message = "Has ganado")
+                    numero_ronda++
+                    record++
+                    lista_colores.clear()
                 }else{
                     showLose(context = LocalContext.current, message = "Has perdido")
-
+                    lista_colores.clear()
                 }
 
             }
