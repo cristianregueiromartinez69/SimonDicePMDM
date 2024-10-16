@@ -2,31 +2,22 @@ package com.pmdm.cristian.botonescolores
 
 import android.content.Context
 import android.os.Bundle
-import android.provider.CalendarContract.Colors
-import android.text.style.BackgroundColorSpan
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -43,14 +34,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.gms.maps.model.Circle
-import com.pmdm.cristian.botonescolores.ui.theme.BotonesColoresTheme
-import com.pmdm.cristian.botonescolores.Colores
 import kotlin.random.Random
 
 val recordJugador = DataRecord(0)
@@ -67,13 +53,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun interfazColores(modifier: Modifier = Modifier) {
-    var color_texto by remember { mutableStateOf("") }
     var lista_colores = remember { mutableStateListOf<Int>() }
     var record by remember { mutableStateOf(0) }
     val isStartButtonPressed = remember { mutableStateOf(true) }
     var numero_ronda by remember { mutableStateOf(0) }
-    var presioneStart by remember { mutableStateOf(false) }
-
+    var presioneStart = remember { mutableStateOf(false) }
     var secuencia by remember { mutableStateOf(mutableListOf<Int>()) }
 
     recordJugador.saveRecord(record)
@@ -106,98 +90,17 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
             Row {
 
-                Button(
-                    onClick = {
-                        color_texto = "Rojo"
-                        lista_colores.add(Colores.ROJO.valorColor)
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Red,
-                    ),
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .padding(3.dp)
-                        .size(95.dp)
-                ) {
-
-                }
-
-
-                Button(
-                    onClick = {
-                        color_texto = "Verde"
-                        lista_colores.add(Colores.VERDE.valorColor)
-
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Green,
-                    ),
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .padding(3.dp)
-                        .size(95.dp)
-                ) {
-
-                }
+               botonesFila1(lista_colores)
             }
 
             Row {
-                Button(
-                    onClick = {
-                        color_texto = "Azul"
-                        lista_colores.add(Colores.AZUL.valorColor)
-
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Blue,
-                    ),
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .padding(3.dp)
-                        .size(95.dp)
-                ) {
-
-                }
-
-                Button(
-                    onClick = {
-                        color_texto = "Amarillo"
-                        lista_colores.add(Colores.AMARILLO.valorColor)
-
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Yellow,
-                        contentColor = Color.Black
-                    ),
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .padding(3.dp)
-                        .size(95.dp)
-                ) {
-
-                }
+                botonesFila2(lista_colores)
             }
 
-            Text(
+            showRondas(numeroRondas = numero_ronda)
 
-                text = "Ronda: $numero_ronda",
+            startGame(isStartButtonPressed, presioneStart1 = presioneStart, secuencia)
 
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .padding(top = 100.dp)
-
-            )
-
-            if(!showButtonStart(isStartButtonPressed)){
-
-                if(!presioneStart){
-                    showToast(secuencia = secuencia, message = "Teclea la secuencia correcta")
-                    presioneStart = true
-                }
-
-
-            }
             if(lista_colores.size == 5){
                 if(winOrLose(secuencia,lista_colores)){
                     showWin(context = LocalContext.current, message = "Has ganado")
@@ -213,7 +116,6 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
 
         }
-        Log.d("Colores", color_texto)
     }
 
 }
@@ -242,6 +144,72 @@ fun initialText() {
 }
 
 @Composable
+fun botonesFila1(misColores: MutableList<Int>) {
+    val listaColores = listOf(Color.Red, Color.Green)
+
+    @Composable
+    fun crearBoton(color: Color, colorValor: Int) {
+        Button(
+            onClick = { misColores.add(colorValor) },
+            colors = ButtonDefaults.buttonColors(containerColor = color),
+            modifier = Modifier
+                .clip(CircleShape)
+                .padding(3.dp)
+                .size(95.dp)
+        ) {
+        }
+    }
+
+    for (color in listaColores) {
+        when (color) {
+            Color.Red -> crearBoton(color, Colores.ROJO.valorColor)
+            Color.Green -> crearBoton(color, Colores.VERDE.valorColor)
+        }
+    }
+}
+
+@Composable
+fun botonesFila2(misColores: MutableList<Int>) {
+    val listaColores = listOf(Color.Blue, Color.Yellow)
+
+    @Composable
+    fun crearBoton(color: Color, colorValor: Int) {
+        Button(
+            onClick = { misColores.add(colorValor) },
+            colors = ButtonDefaults.buttonColors(containerColor = color),
+            modifier = Modifier
+                .clip(CircleShape)
+                .padding(3.dp)
+                .size(95.dp)
+        ) {
+        }
+    }
+
+    for (color in listaColores) {
+        when (color) {
+            Color.Blue -> crearBoton(color, Colores.AZUL.valorColor)
+            Color.Yellow -> crearBoton(color, Colores.AMARILLO.valorColor)
+        }
+    }
+}
+
+@Composable
+fun showRondas(numeroRondas: Int){
+
+    Text(
+
+        text = "Ronda: $numeroRondas",
+
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        modifier = Modifier
+            .padding(top = 100.dp)
+
+    )
+
+}
+
+@Composable
 fun showRecord(record:Int){
 
     Column(verticalArrangement = Arrangement.Center,
@@ -257,6 +225,23 @@ fun showRecord(record:Int){
 
     }
 
+}
+@Composable
+private fun startGame(
+    isStartButtonPressed: MutableState<Boolean>,
+    presioneStart1: MutableState<Boolean>,
+    secuencia: MutableList<Int>
+) {
+
+    if (!showButtonStart(isStartButtonPressed)) {
+
+        if (!presioneStart1.value) {
+            showToast(secuencia = secuencia, message = "Teclea la secuencia correcta")
+            presioneStart1.value = true
+        }
+
+
+    }
 }
 
 @Composable
@@ -315,18 +300,8 @@ fun showWin(context: Context, message: String,duration: Int = Toast.LENGTH_LONG)
     Toast.makeText(context,message,duration).show()
 }
 
-/**
- * variables a necesitar logica simon dice:
- * 1. booleanos para saber si ganaste 1 ronda o no
- * 2. variable incremento para ir aumentando el numero de colores a iluminar
- * 3. lista que se va limpiando a cada ronda y que guarda los colores iluminados
- *
- * logica:
- * 1. a cada ronda, se ilumina un color y tienes que pulsarlo en el orden establecido
- * 2. por cada ronda se aumenta en 1
- * 3. si ganas aumenta la ronda y el record
- * 4. comparamos 2 listas, las que pulsas y las que guardas colores, si hay coincidencias, ganaste, si no, perdiste
- */
+
+
 
 /**
  * Todo: Una rama nueva
