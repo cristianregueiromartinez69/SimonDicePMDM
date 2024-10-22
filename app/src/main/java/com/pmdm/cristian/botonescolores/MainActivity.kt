@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.pmdm.cristian.botonescolores.model.Colores
 import com.pmdm.cristian.botonescolores.model.DataRecord
 import kotlin.random.Random
+import com.pmdm.cristian.botonescolores.view.*
 
 val recordJugador = DataRecord(0)
 
@@ -76,7 +77,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
         )
 
         Column {
-            initialText()
+            initialText("SIMON DICE")
             showRecord(record)
         }
 
@@ -124,26 +125,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
 
 
-@Composable
-fun initialText() {
 
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(
-            start = 90.dp,
-            top = 80.dp
-        )
-    ) {
-        Text(
-            text = "SIMON DICE!",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-    }
-
-}
 
 @Composable
 fun botonesFila1(misColores: MutableList<Int>) {
