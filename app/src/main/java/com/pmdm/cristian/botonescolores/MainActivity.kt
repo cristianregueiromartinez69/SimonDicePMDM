@@ -123,14 +123,6 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
 }
 
-
-
-
-
-
-
-
-
 @Composable
 fun showRondas(numeroRondas: Int){
 
