@@ -127,55 +127,9 @@ fun interfazColores(modifier: Modifier = Modifier) {
 
 
 
-@Composable
-fun botonesFila1(misColores: MutableList<Int>) {
-    val listaColores = listOf(Color.Red, Color.Green)
 
-    @Composable
-    fun crearBoton(color: Color, colorValor: Int) {
-        Button(
-            onClick = { misColores.add(colorValor) },
-            colors = ButtonDefaults.buttonColors(containerColor = color),
-            modifier = Modifier
-                .clip(CircleShape)
-                .padding(3.dp)
-                .size(95.dp)
-        ) {
-        }
-    }
 
-    for (color in listaColores) {
-        when (color) {
-            Color.Red -> crearBoton(color, Colores.ROJO.valorColor)
-            Color.Green -> crearBoton(color, Colores.VERDE.valorColor)
-        }
-    }
-}
 
-@Composable
-fun botonesFila2(misColores: MutableList<Int>) {
-    val listaColores = listOf(Color.Blue, Color.Yellow)
-
-    @Composable
-    fun crearBoton(color: Color, colorValor: Int) {
-        Button(
-            onClick = { misColores.add(colorValor) },
-            colors = ButtonDefaults.buttonColors(containerColor = color),
-            modifier = Modifier
-                .clip(CircleShape)
-                .padding(3.dp)
-                .size(95.dp)
-        ) {
-        }
-    }
-
-    for (color in listaColores) {
-        when (color) {
-            Color.Blue -> crearBoton(color, Colores.AZUL.valorColor)
-            Color.Yellow -> crearBoton(color, Colores.AMARILLO.valorColor)
-        }
-    }
-}
 
 @Composable
 fun showRondas(numeroRondas: Int){
@@ -193,23 +147,7 @@ fun showRondas(numeroRondas: Int){
 
 }
 
-@Composable
-fun showRecord(record:Int){
 
-    Column(verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(top = 40.dp, start = 130.dp)) {
-
-        Text(text = "Record: $record",
-            fontSize = 25.sp,
-            fontWeight = FontWeight.Bold)
-
-        Log.d("Record", recordJugador.record.toString())
-
-    }
-
-}
 @Composable
 private fun startGame(
     isStartButtonPressed: MutableState<Boolean>,
