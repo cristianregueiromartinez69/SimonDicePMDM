@@ -37,6 +37,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pmdm.cristian.botonescolores.model.Colores
+import com.pmdm.cristian.botonescolores.model.DataRecord
 import kotlin.random.Random
 
 val recordJugador = DataRecord(0)

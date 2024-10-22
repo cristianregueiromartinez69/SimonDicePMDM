@@ -1,4 +1,4 @@
-package com.pmdm.cristian.botonescolores
+package com.pmdm.cristian.botonescolores.model
 
 data class DataRecord(var record:Int) {
 

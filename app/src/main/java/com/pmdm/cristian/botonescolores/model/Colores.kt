@@ -1,4 +1,4 @@
-package com.pmdm.cristian.botonescolores
+package com.pmdm.cristian.botonescolores.model
 
 enum class Colores(val valorColor:Int){
     ROJO(1),
