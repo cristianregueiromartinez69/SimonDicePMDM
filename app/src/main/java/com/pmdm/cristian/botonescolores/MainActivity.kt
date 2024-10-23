@@ -58,7 +58,6 @@ class MainActivity : ComponentActivity() {
 fun interfazColores(viewModel: MyViewModel) {
     var lista_colores = remember { mutableStateListOf<Int>() }
     val isStartButtonPressed = remember { mutableStateOf(true) }
-    var numero_ronda by remember { mutableStateOf(0) }
     var presioneStart = remember { mutableStateOf(false) }
     var secuencia by remember { mutableStateOf(mutableListOf<Int>()) }
 
@@ -98,18 +97,19 @@ fun interfazColores(viewModel: MyViewModel) {
                 botonesFila2(lista_colores)
             }
 
-            showRondas(numeroRondas = numero_ronda)
+            showRondas(viewModel.getRondas())
 
             startGame(isStartButtonPressed, presioneStart1 = presioneStart, secuencia)
 
             if(lista_colores.size == 5){
                 if(winOrLose(secuencia,lista_colores)){
                     showWin(context = LocalContext.current, message = "Has ganado")
-                    numero_ronda++
                     viewModel.saveRecord()
+                    viewModel.incrementRondas()
                     lista_colores.clear()
                 }else{
                     showLose(context = LocalContext.current, message = "Has perdido")
+                    viewModel.restartRondas()
                     lista_colores.clear()
                 }
 

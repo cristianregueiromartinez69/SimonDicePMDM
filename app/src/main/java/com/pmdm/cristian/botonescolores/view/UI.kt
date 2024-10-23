@@ -110,5 +110,23 @@ fun botonesFila2(misColores: MutableList<Int>) {
     }
 }
 
+@Composable
+fun showRondas(numeroRondas: Int){
+
+    Text(
+
+        text = "Ronda: $numeroRondas",
+
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        modifier = Modifier
+            .padding(top = 100.dp)
+
+    )
+
+}
+
+
+
 
 
