@@ -22,8 +22,10 @@ class MyViewModel(): ViewModel() {
         return saludoInicio
     }
 
-    fun saveRecord(auxRecord : Int){
-        DataRecord.record = auxRecord
+
+    fun saveRecord(){
+        record.value++
+        DataRecord.record = record.value
     }
 
     fun getRecord():Int{

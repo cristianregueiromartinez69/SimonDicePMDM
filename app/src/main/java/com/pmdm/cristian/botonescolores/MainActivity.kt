@@ -57,7 +57,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun interfazColores(viewModel: MyViewModel) {
     var lista_colores = remember { mutableStateListOf<Int>() }
-    var record by remember { mutableStateOf(0) }
     val isStartButtonPressed = remember { mutableStateOf(true) }
     var numero_ronda by remember { mutableStateOf(0) }
     var presioneStart = remember { mutableStateOf(false) }
@@ -77,7 +76,7 @@ fun interfazColores(viewModel: MyViewModel) {
 
         Column {
             initialText(viewModel.getSaludoInicio())
-            showRecord(record)
+            showRecord(viewModel.getRecord())
         }
 
 
@@ -107,8 +106,7 @@ fun interfazColores(viewModel: MyViewModel) {
                 if(winOrLose(secuencia,lista_colores)){
                     showWin(context = LocalContext.current, message = "Has ganado")
                     numero_ronda++
-                    record++
-                    viewModel.saveRecord(record)
+                    viewModel.saveRecord()
                     lista_colores.clear()
                 }else{
                     showLose(context = LocalContext.current, message = "Has perdido")
