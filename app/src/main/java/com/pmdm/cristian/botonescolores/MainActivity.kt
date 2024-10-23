@@ -2,7 +2,6 @@ package com.pmdm.cristian.botonescolores
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -37,8 +35,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.pmdm.cristian.botonescolores.model.Colores
+import androidx.lifecycle.ViewModel
 import com.pmdm.cristian.botonescolores.model.DataRecord
+import com.pmdm.cristian.botonescolores.modelview.MyViewModel
 import kotlin.random.Random
 import com.pmdm.cristian.botonescolores.view.*
 
@@ -47,6 +46,7 @@ val recordJugador = DataRecord(0)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModel : MyViewModel = MyViewModel()
         enableEdgeToEdge()
         setContent {
             interfazColores()
@@ -217,11 +217,3 @@ fun showWin(context: Context, message: String,duration: Int = Toast.LENGTH_LONG)
 
 
 
-/**
- * Todo: Una rama nueva
- * 1. Inicializar una secuencia de 5 numeros randoms entre (1-4)
- * 2. una toast muestra la secuencia con un periodo corto
- * 3. El usuario marca la secuencia
- * 4. Se comprueba en cada click si coincide
- * 5. Si falla game over sale una toast game over, si llega al final sin fallar congratulations
- */
