@@ -41,7 +41,7 @@ import com.pmdm.cristian.botonescolores.modelview.MyViewModel
 import kotlin.random.Random
 import com.pmdm.cristian.botonescolores.view.*
 
-val recordJugador = DataRecord(0)
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,6 @@ fun interfazColores(viewModel: MyViewModel) {
     var presioneStart = remember { mutableStateOf(false) }
     var secuencia by remember { mutableStateOf(mutableListOf<Int>()) }
 
-    recordJugador.saveRecord(record)
 
     Box (modifier = Modifier
         .fillMaxSize()
@@ -109,6 +108,7 @@ fun interfazColores(viewModel: MyViewModel) {
                     showWin(context = LocalContext.current, message = "Has ganado")
                     numero_ronda++
                     record++
+                    viewModel.saveRecord(record)
                     lista_colores.clear()
                 }else{
                     showLose(context = LocalContext.current, message = "Has perdido")

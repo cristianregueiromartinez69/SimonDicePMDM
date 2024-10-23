@@ -1,9 +1,7 @@
 package com.pmdm.cristian.botonescolores.model
 
-data class DataRecord(var record:Int) {
+object DataRecord {
 
-    fun saveRecord(record: Int) {
-      this.record = record
-    }
+    var record = 0;
 
 }

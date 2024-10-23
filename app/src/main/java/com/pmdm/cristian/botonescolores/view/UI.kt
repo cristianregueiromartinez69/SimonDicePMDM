@@ -18,7 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pmdm.cristian.botonescolores.model.Colores
-import com.pmdm.cristian.botonescolores.recordJugador
+import com.pmdm.cristian.botonescolores.model.DataRecord
+import com.pmdm.cristian.botonescolores.modelview.MyViewModel
 
 @Composable
 fun initialText(bienvenido:String) {
@@ -49,11 +50,11 @@ fun showRecord(record:Int){
         modifier = Modifier
             .padding(top = 40.dp, start = 130.dp)) {
 
-        Text(text = "Record: $record",
+        Text(text = "Record: $record" ,
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold)
 
-        Log.d("Record", recordJugador.record.toString())
+        Log.d("Record", record.toString())
 
     }
 
