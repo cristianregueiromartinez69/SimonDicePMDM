@@ -49,13 +49,13 @@ class MainActivity : ComponentActivity() {
         val viewModel : MyViewModel = MyViewModel()
         enableEdgeToEdge()
         setContent {
-            interfazColores()
+            interfazColores(viewModel)
         }
     }
 }
 
 @Composable
-fun interfazColores(modifier: Modifier = Modifier) {
+fun interfazColores(viewModel: MyViewModel) {
     var lista_colores = remember { mutableStateListOf<Int>() }
     var record by remember { mutableStateOf(0) }
     val isStartButtonPressed = remember { mutableStateOf(true) }
@@ -77,7 +77,7 @@ fun interfazColores(modifier: Modifier = Modifier) {
         )
 
         Column {
-            initialText("SIMON DICE")
+            initialText(viewModel.getSaludoInicio())
             showRecord(record)
         }
 

@@ -6,5 +6,8 @@ class MyViewModel(): ViewModel() {
 
     private val saludoInicio:String = "¡SIMON DICE!"
 
+    fun getSaludoInicio():String{
 
+        return saludoInicio
+    }
 }
