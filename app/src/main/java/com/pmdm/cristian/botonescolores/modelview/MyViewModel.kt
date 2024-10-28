@@ -94,6 +94,10 @@ class MyViewModel(): ViewModel() {
         return false
     }
 
+    fun game():Unit{
+
+    }
+
 
 
     fun showLose(context: Context, message: String, duration: Int = Toast.LENGTH_LONG){
