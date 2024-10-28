@@ -164,6 +164,24 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>):Boolean {
 }
 
 @Composable
+fun startGame(
+    isStartButtonPressed: MutableState<Boolean>,
+    presioneStart1: MutableState<Boolean>,
+    secuencia: MutableList<Int>
+) {
+
+    if (!showButtonStart(isStartButtonPressed)) {
+
+        if (!presioneStart1.value) {
+            showToast(secuencia = secuencia, message = "Teclea la secuencia correcta")
+            presioneStart1.value = true
+        }
+
+
+    }
+}
+
+@Composable
 fun showToast(context: Context = LocalContext.current, secuencia:MutableList<Int>, message: String, duration: Int = Toast.LENGTH_LONG){
     val random = Random
     for (i in 1..5){

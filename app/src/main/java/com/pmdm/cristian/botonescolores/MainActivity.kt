@@ -124,23 +124,7 @@ fun interfazColores(viewModel: MyViewModel) {
 
 
 
-@Composable
-private fun startGame(
-    isStartButtonPressed: MutableState<Boolean>,
-    presioneStart1: MutableState<Boolean>,
-    secuencia: MutableList<Int>
-) {
 
-    if (!showButtonStart(isStartButtonPressed)) {
-
-        if (!presioneStart1.value) {
-            showToast(secuencia = secuencia, message = "Teclea la secuencia correcta")
-            presioneStart1.value = true
-        }
-
-
-    }
-}
 
 
 
