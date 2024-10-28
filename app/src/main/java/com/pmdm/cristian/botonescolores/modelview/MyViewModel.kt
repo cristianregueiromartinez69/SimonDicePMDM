@@ -76,10 +76,11 @@ class MyViewModel(): ViewModel() {
 
     fun setRandom(){
         numRandom.value = random.nextInt(4) + 1
+        Datos.numRandom = numRandom.value
     }
 
     fun getRandom():Int{
-        return numRandom.value
+        return Datos.numRandom
     }
 
     fun winOrLose(num:Int,listaColores:MutableList<Int>):Boolean{
