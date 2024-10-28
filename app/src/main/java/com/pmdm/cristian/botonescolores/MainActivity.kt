@@ -59,7 +59,6 @@ fun interfazColores(viewModel: MyViewModel) {
     var lista_colores = remember { mutableStateListOf<Int>() }
     val isStartButtonPressed = remember { mutableStateOf(true) }
     var presioneStart = remember { mutableStateOf(false) }
-    var secuencia by remember { mutableStateOf(mutableListOf<Int>()) }
 
 
     Box (modifier = Modifier
@@ -99,7 +98,7 @@ fun interfazColores(viewModel: MyViewModel) {
 
             showRondas(viewModel.getRondas())
 
-            startGame(isStartButtonPressed, presioneStart1 = presioneStart, secuencia)
+            startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel.numRandom)
 
             if(lista_colores.size == 5){
                 if(winOrLose(secuencia,lista_colores)){
