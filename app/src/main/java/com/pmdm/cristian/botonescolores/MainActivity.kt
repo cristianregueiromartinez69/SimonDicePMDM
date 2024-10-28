@@ -98,8 +98,9 @@ fun interfazColores(viewModel: MyViewModel) {
 
             showRondas(viewModel.getRondas())
 
-            startGame(isStartButtonPressed, presioneStart1 = presioneStart)
+            startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel = viewModel)
 
+            /**
             if(lista_colores.size == 5){
                 if(winOrLose(secuencia,lista_colores)){
                     showWin(context = LocalContext.current, message = "Has ganado")
@@ -112,7 +113,7 @@ fun interfazColores(viewModel: MyViewModel) {
                     lista_colores.clear()
                 }
 
-            }
+            }**/
 
 
         }

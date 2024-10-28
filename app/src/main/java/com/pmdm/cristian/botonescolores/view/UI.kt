@@ -133,7 +133,7 @@ fun showRondas(numeroRondas: Int){
 }
 
 @Composable
-fun showButtonStart(isButtonvisible: MutableState<Boolean>):Boolean {
+fun showButtonStart(isButtonvisible: MutableState<Boolean>, playGame:(boolean:MutableState<Boolean>) -> Unit):Boolean {
     val rosa = Color(0xFFFF00C9)
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -142,7 +142,7 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>):Boolean {
     {
 
         if(isButtonvisible.value){
-            Button(onClick = { isButtonvisible.value = false },
+            Button(onClick = { playGame(isButtonvisible) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = rosa,
                     contentColor = Color.Black
@@ -167,9 +167,10 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>):Boolean {
 fun startGame(
     isStartButtonPressed: MutableState<Boolean>,
     presioneStart1: MutableState<Boolean>,
+    viewModel: MyViewModel
 ) {
 
-    if (!showButtonStart(isStartButtonPressed)) {
+    if (!showButtonStart(isStartButtonPressed, viewModel::logicalStartButton)) {
 
         if (!presioneStart1.value) {
             showToast(context = LocalContext.current, message = "Introduce un numero del 1 al 4")

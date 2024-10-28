@@ -1,5 +1,6 @@
 package com.pmdm.cristian.botonescolores.modelview
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -66,13 +67,21 @@ class MyViewModel(): ViewModel() {
         return Rondas.rondas
     }
 
+    fun logicalStartButton(presioneStart1: MutableState<Boolean>):Unit{
+        presioneStart1.value = false
+        setRandom()
+        Log.d("Random", getRandom().toString())
+    }
+
     fun setRandom(){
-        rondas.value = random.nextInt(4) + 1
+        numRandom.value = random.nextInt(4) + 1
     }
 
     fun getRandom():Int{
         return numRandom.value
     }
+
+
 
 
 }
