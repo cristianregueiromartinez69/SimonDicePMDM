@@ -3,8 +3,12 @@ package com.pmdm.cristian.botonescolores.view
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -13,15 +17,21 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pmdm.cristian.botonescolores.R
 import com.pmdm.cristian.botonescolores.model.Colores
 import com.pmdm.cristian.botonescolores.modelview.MyViewModel
 
@@ -185,6 +195,92 @@ fun showToast(context: Context = LocalContext.current, message: String, duration
     Toast.makeText(context,message,duration).show()
 
 }
+
+@Composable
+fun game(listaColores: MutableList<Int>, viewModel: MyViewModel): Unit {
+
+    if (listaColores.size == 1) {
+        if (viewModel.winOrLose(viewModel.getRandom(), listaColores)) {
+            viewModel.showWin(context = LocalContext.current, message = "Has ganado")
+            viewModel.saveRecord()
+            viewModel.incrementRondas()
+            listaColores.clear()
+        } else {
+            viewModel.showLose(context = LocalContext.current, message = "Has perdido")
+            viewModel.restartRondas()
+            listaColores.clear()
+        }
+    }
+}
+
+
+@Composable
+fun myApp(viewModel: MyViewModel) {
+    var lista_colores = remember { mutableStateListOf<Int>() }
+    val isStartButtonPressed = remember { mutableStateOf(true) }
+    var presioneStart = remember { mutableStateOf(false) }
+
+
+    Box (modifier = Modifier
+        .fillMaxSize()
+    ){
+        val backgroundImage = painterResource(id = R.drawable.fondo)
+        Image(
+            painter = backgroundImage,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Column {
+            initialText(viewModel.getSaludoInicio())
+            showRecord(viewModel.getRecord())
+        }
+
+
+        Column(
+
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(70.dp)
+                .padding(top = 190.dp, start = 15.dp)
+        ) {
+
+            Row {
+
+                botonesFila1(lista_colores)
+            }
+
+            Row {
+                botonesFila2(lista_colores)
+            }
+
+            showRondas(viewModel.getRondas())
+
+            startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel = viewModel)
+
+
+            if(lista_colores.size == 1){
+                if(viewModel.winOrLose(viewModel.getRandom(),lista_colores)){
+                    viewModel.showWin(context = LocalContext.current, message = "Has ganado")
+                    viewModel.saveRecord()
+                    viewModel.incrementRondas()
+                    lista_colores.clear()
+                }else{
+                    viewModel.showLose(context = LocalContext.current, message = "Has perdido")
+                    viewModel.restartRondas()
+                    lista_colores.clear()
+                }
+
+            }
+
+
+        }
+    }
+
+}
+
 
 
 

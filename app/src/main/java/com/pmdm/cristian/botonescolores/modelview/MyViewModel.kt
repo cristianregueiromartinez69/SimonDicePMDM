@@ -106,22 +106,7 @@ class MyViewModel(): ViewModel() {
         Toast.makeText(context,message,duration).show()
     }
 
-    fun game(listaColores: MutableList<Int>):Unit{
 
-        if(listaColores.size == 1){
-            if(winOrLose(getRandom(),listaColores)){
-                showWin(context = LocalContext.current, message = "Has ganado")
-                saveRecord()
-                incrementRondas()
-                listaColores.clear()
-            }else{
-                showLose(context = LocalContext.current, message = "Has perdido")
-                restartRondas()
-                listaColores.clear()
-            }
-
-        }
-    }
 
 
 

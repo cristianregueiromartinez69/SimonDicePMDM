@@ -32,77 +32,11 @@ class MainActivity : ComponentActivity() {
         val viewModel : MyViewModel = MyViewModel()
         enableEdgeToEdge()
         setContent {
-            interfazColores(viewModel)
+            myApp(viewModel)
         }
     }
 }
 
-@Composable
-fun interfazColores(viewModel: MyViewModel) {
-    var lista_colores = remember { mutableStateListOf<Int>() }
-    val isStartButtonPressed = remember { mutableStateOf(true) }
-    var presioneStart = remember { mutableStateOf(false) }
-
-
-    Box (modifier = Modifier
-        .fillMaxSize()
-        ){
-        val backgroundImage = painterResource(id = R.drawable.fondo)
-        Image(
-            painter = backgroundImage,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-
-        Column {
-            initialText(viewModel.getSaludoInicio())
-            showRecord(viewModel.getRecord())
-        }
-
-
-        Column(
-
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(70.dp)
-                .padding(top = 190.dp, start = 15.dp)
-        ) {
-
-            Row {
-
-               botonesFila1(lista_colores)
-            }
-
-            Row {
-                botonesFila2(lista_colores)
-            }
-
-            showRondas(viewModel.getRondas())
-
-            startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel = viewModel)
-
-
-            if(lista_colores.size == 1){
-                if(viewModel.winOrLose(viewModel.getRandom(),lista_colores)){
-                    viewModel.showWin(context = LocalContext.current, message = "Has ganado")
-                    viewModel.saveRecord()
-                    viewModel.incrementRondas()
-                    lista_colores.clear()
-                }else{
-                    viewModel.showLose(context = LocalContext.current, message = "Has perdido")
-                    viewModel.restartRondas()
-                    lista_colores.clear()
-                }
-
-            }
-
-
-        }
-    }
-
-}
 
 
 
