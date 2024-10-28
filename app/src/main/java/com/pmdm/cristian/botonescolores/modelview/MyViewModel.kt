@@ -6,8 +6,7 @@ import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.pmdm.cristian.botonescolores.model.DataRecord
-import com.pmdm.cristian.botonescolores.model.Rondas
+import com.pmdm.cristian.botonescolores.model.Datos
 import kotlin.random.Random
 
 class MyViewModel(): ViewModel() {
@@ -39,14 +38,14 @@ class MyViewModel(): ViewModel() {
      */
     fun saveRecord(){
         record.value++
-        DataRecord.record = record.value
+        Datos.record = record.value
     }
 
     /**
      * Metodo que nos devuelve el record actual
      */
     fun getRecord():Int{
-        return DataRecord.record
+        return Datos.record
     }
 
     /**
@@ -54,19 +53,19 @@ class MyViewModel(): ViewModel() {
      */
     fun incrementRondas(){
         rondas.value++
-        Rondas.rondas = rondas.value
+        Datos.rondas = rondas.value
     }
 
     fun restartRondas(){
         rondas.value = 0
-        Rondas.rondas = rondas.value
+        Datos.rondas = rondas.value
     }
 
     /**
      * Metodo que devuelve el valor de las rondas
      */
     fun getRondas():Int{
-        return Rondas.rondas
+        return Datos.rondas
     }
 
     fun logicalStartButton(presioneStart1: MutableState<Boolean>):Unit{

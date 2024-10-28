@@ -23,9 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pmdm.cristian.botonescolores.model.Colores
-import com.pmdm.cristian.botonescolores.model.DataRecord
 import com.pmdm.cristian.botonescolores.modelview.MyViewModel
-import kotlin.random.Random
 
 @Composable
 fun initialText(bienvenido:String) {
