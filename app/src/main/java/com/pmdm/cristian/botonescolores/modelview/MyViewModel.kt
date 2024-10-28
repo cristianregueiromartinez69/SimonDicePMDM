@@ -1,6 +1,8 @@
 package com.pmdm.cristian.botonescolores.modelview
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -79,6 +81,29 @@ class MyViewModel(): ViewModel() {
 
     fun getRandom():Int{
         return numRandom.value
+    }
+
+    fun winOrLose(num:Int,listaColores:MutableList<Int>):Boolean{
+
+        for(i in listaColores){
+            if(i == num){
+                return true
+            }
+
+        }
+        return false
+    }
+
+
+
+    fun showLose(context: Context, message: String, duration: Int = Toast.LENGTH_LONG){
+
+        Toast.makeText(context,message,duration).show()
+    }
+
+    fun showWin(context: Context, message: String, duration: Int = Toast.LENGTH_LONG){
+
+        Toast.makeText(context,message,duration).show()
     }
 
 

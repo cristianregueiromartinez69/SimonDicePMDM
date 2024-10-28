@@ -100,20 +100,20 @@ fun interfazColores(viewModel: MyViewModel) {
 
             startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel = viewModel)
 
-            /**
-            if(lista_colores.size == 5){
-                if(winOrLose(secuencia,lista_colores)){
-                    showWin(context = LocalContext.current, message = "Has ganado")
+
+            if(lista_colores.size == 1){
+                if(viewModel.winOrLose(viewModel.getRandom(),lista_colores)){
+                    viewModel.showWin(context = LocalContext.current, message = "Has ganado")
                     viewModel.saveRecord()
                     viewModel.incrementRondas()
                     lista_colores.clear()
                 }else{
-                    showLose(context = LocalContext.current, message = "Has perdido")
+                    viewModel.showLose(context = LocalContext.current, message = "Has perdido")
                     viewModel.restartRondas()
                     lista_colores.clear()
                 }
 
-            }**/
+            }
 
 
         }
@@ -128,22 +128,7 @@ fun interfazColores(viewModel: MyViewModel) {
 
 
 
-fun winOrLose(secuencia:MutableList<Int>,lista_colores:MutableList<Int>):Boolean{
 
-    return secuencia == lista_colores
-}
-
-
-
-fun showLose(context: Context, message: String,duration: Int = Toast.LENGTH_LONG){
-
-    Toast.makeText(context,message,duration).show()
-}
-
-fun showWin(context: Context, message: String,duration: Int = Toast.LENGTH_LONG){
-
-    Toast.makeText(context,message,duration).show()
-}
 
 
 
