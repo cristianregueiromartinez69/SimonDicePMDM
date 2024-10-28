@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import com.pmdm.cristian.botonescolores.model.Datos
 import kotlin.random.Random
@@ -94,11 +95,6 @@ class MyViewModel(): ViewModel() {
         return false
     }
 
-    fun game():Unit{
-
-    }
-
-
 
     fun showLose(context: Context, message: String, duration: Int = Toast.LENGTH_LONG){
 
@@ -109,6 +105,24 @@ class MyViewModel(): ViewModel() {
 
         Toast.makeText(context,message,duration).show()
     }
+
+    fun game(listaColores: MutableList<Int>):Unit{
+
+        if(listaColores.size == 1){
+            if(winOrLose(getRandom(),listaColores)){
+                showWin(context = LocalContext.current, message = "Has ganado")
+                saveRecord()
+                incrementRondas()
+                listaColores.clear()
+            }else{
+                showLose(context = LocalContext.current, message = "Has perdido")
+                restartRondas()
+                listaColores.clear()
+            }
+
+        }
+    }
+
 
 
 
