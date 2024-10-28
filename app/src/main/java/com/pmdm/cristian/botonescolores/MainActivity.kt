@@ -121,21 +121,7 @@ fun interfazColores(viewModel: MyViewModel) {
 
 }
 
-@Composable
-fun showRondas(numeroRondas: Int){
 
-    Text(
-
-        text = "Ronda: $numeroRondas",
-
-        fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
-        modifier = Modifier
-            .padding(top = 100.dp)
-
-    )
-
-}
 
 
 @Composable
@@ -156,51 +142,14 @@ private fun startGame(
     }
 }
 
-@Composable
-fun showButtonStart(isButtonvisible:MutableState<Boolean>):Boolean {
-    val rosa = Color(0xFFFF00C9)
-    Column(verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(top = 40.dp))
-            {
 
-        if(isButtonvisible.value){
-            Button(onClick = { isButtonvisible.value = false },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = rosa,
-                    contentColor = Color.Black
-                ),
-                modifier = Modifier
-                    .size(145.dp)
-                    .clip(RectangleShape)
-            ) {
-                Text(text = "Start",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold)
-
-            }
-        }
-
-
-    }
-return isButtonvisible.value
-}
 
 fun winOrLose(secuencia:MutableList<Int>,lista_colores:MutableList<Int>):Boolean{
 
     return secuencia == lista_colores
 }
 
-@Composable
-fun showToast(context: Context = LocalContext.current, secuencia:MutableList<Int>, message: String,duration: Int = Toast.LENGTH_LONG){
-    val random = Random
-    for (i in 1..5){
-            secuencia.add(random.nextInt(4) + 1)
-    }
-    Toast.makeText(context,secuencia.toString(),duration).show()
 
-}
 
 fun showLose(context: Context, message: String,duration: Int = Toast.LENGTH_LONG){
 

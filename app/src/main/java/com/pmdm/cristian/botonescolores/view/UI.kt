@@ -1,6 +1,8 @@
 package com.pmdm.cristian.botonescolores.view
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -10,16 +12,20 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pmdm.cristian.botonescolores.model.Colores
 import com.pmdm.cristian.botonescolores.model.DataRecord
 import com.pmdm.cristian.botonescolores.modelview.MyViewModel
+import kotlin.random.Random
 
 @Composable
 fun initialText(bienvenido:String) {
@@ -123,6 +129,47 @@ fun showRondas(numeroRondas: Int){
             .padding(top = 100.dp)
 
     )
+
+}
+
+@Composable
+fun showButtonStart(isButtonvisible: MutableState<Boolean>):Boolean {
+    val rosa = Color(0xFFFF00C9)
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(top = 40.dp))
+    {
+
+        if(isButtonvisible.value){
+            Button(onClick = { isButtonvisible.value = false },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = rosa,
+                    contentColor = Color.Black
+                ),
+                modifier = Modifier
+                    .size(145.dp)
+                    .clip(RectangleShape)
+            ) {
+                Text(text = "Start",
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold)
+
+            }
+        }
+
+
+    }
+    return isButtonvisible.value
+}
+
+@Composable
+fun showToast(context: Context = LocalContext.current, secuencia:MutableList<Int>, message: String, duration: Int = Toast.LENGTH_LONG){
+    val random = Random
+    for (i in 1..5){
+        secuencia.add(random.nextInt(4) + 1)
+    }
+    Toast.makeText(context,secuencia.toString(),duration).show()
 
 }
 
