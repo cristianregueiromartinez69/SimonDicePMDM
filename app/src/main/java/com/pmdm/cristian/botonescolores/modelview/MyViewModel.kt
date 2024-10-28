@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.pmdm.cristian.botonescolores.model.DataRecord
 import com.pmdm.cristian.botonescolores.model.Rondas
+import kotlin.random.Random
 
 class MyViewModel(): ViewModel() {
 
@@ -14,6 +15,10 @@ class MyViewModel(): ViewModel() {
     var record = mutableStateOf(0)
 
     var rondas = mutableStateOf(0)
+
+    val random = Random
+
+    var numRandom = mutableStateOf(0)
 
 
 
@@ -59,6 +64,14 @@ class MyViewModel(): ViewModel() {
      */
     fun getRondas():Int{
         return Rondas.rondas
+    }
+
+    fun setRandom(){
+        rondas.value = random.nextInt(4) + 1
+    }
+
+    fun getRandom():Int{
+        return numRandom.value
     }
 
 
