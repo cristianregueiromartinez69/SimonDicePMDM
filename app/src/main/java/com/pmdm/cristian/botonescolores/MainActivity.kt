@@ -98,7 +98,7 @@ fun interfazColores(viewModel: MyViewModel) {
 
             showRondas(viewModel.getRondas())
 
-            startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel.numRandom)
+            startGame(isStartButtonPressed, presioneStart1 = presioneStart)
 
             if(lista_colores.size == 5){
                 if(winOrLose(secuencia,lista_colores)){

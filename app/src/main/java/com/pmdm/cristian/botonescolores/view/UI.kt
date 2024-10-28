@@ -167,7 +167,6 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>):Boolean {
 fun startGame(
     isStartButtonPressed: MutableState<Boolean>,
     presioneStart1: MutableState<Boolean>,
-    secuencia: MutableState<Int>
 ) {
 
     if (!showButtonStart(isStartButtonPressed)) {
