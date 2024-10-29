@@ -195,7 +195,7 @@ fun startGame(
     if (!showButtonStart(isStartButtonPressed, viewModel::logicalStartButton)) {
 
         if (!presioneStart1.value) {
-            showToast(context = LocalContext.current, message = "Introduce un numero del 1 al 4")
+            showToast(context = LocalContext.current, message = "Pulsa 3 colores")
             presioneStart1.value = true
         }
 
@@ -205,7 +205,7 @@ fun startGame(
 
 @Composable
 fun continueGameWhileWin(viewModel: MyViewModel){
-    showToast(context = LocalContext.current, message = "Introduce un numero del 1 al 4")
+    showToast(context = LocalContext.current, message = "Vuelve a pulsar 3 botones")
     viewModel.setRandom()
 }
 
