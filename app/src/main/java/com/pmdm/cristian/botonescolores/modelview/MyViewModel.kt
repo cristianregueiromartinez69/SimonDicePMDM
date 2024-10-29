@@ -111,6 +111,7 @@ class MyViewModel(): ViewModel() {
     }
 
     fun winOrLose(lista_Random:MutableList<Int>,listaColores:MutableList<Int>):Boolean{
+
         for(i in lista_Random.indices){
             if(lista_Random[i] != listaColores[i]){
                 return false
