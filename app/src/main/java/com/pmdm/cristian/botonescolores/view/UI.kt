@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,6 +36,7 @@ import com.pmdm.cristian.botonescolores.R
 import com.pmdm.cristian.botonescolores.model.Colores
 import com.pmdm.cristian.botonescolores.model.Datos
 import com.pmdm.cristian.botonescolores.modelview.MyViewModel
+import kotlin.text.clear
 
 @Composable
 fun initialText(bienvenido:String) {
@@ -217,21 +219,25 @@ fun showToast(context: Context = LocalContext.current, message: String, duration
 }
 
 @Composable
-fun game(listaColores: MutableList<Int>, viewModel: MyViewModel): Unit {
+fun game(listaColores: MutableList<Int>, colorValor:Int, viewModel: MyViewModel): Unit {
 
-    if (listaColores.size == 1) {
-        if (viewModel.winOrLose(viewModel.getRandom(), listaColores)) {
-            viewModel.showWin(context = LocalContext.current, message = "Has ganado")
-            viewModel.saveRecord()
-            viewModel.incrementRondas()
-            listaColores.clear()
-        } else {
-            viewModel.showLose(context = LocalContext.current, message = "Has perdido")
-            viewModel.restartRondas()
-            listaColores.clear()
-        }
+    listaColores.add(colorValor) // Add color to the list
+
+    if (!viewModel.winOrLose(viewModel.getRandom(), listaColores)) {
+        viewModel.showLose(context = LocalContext.current, message = "Has perdido")
+        viewModel.restartRondas()
+        viewModel.resetRecord()
+        listaColores.clear()
+        viewModel.clearListaRandoms()
+    } else if (listaColores.size == 3) {
+        viewModel.showWin(context = LocalContext.current, message = "Has ganado")
+        viewModel.saveRecord()
+        viewModel.incrementRondas()
+        listaColores.clear()
+        viewModel.clearListaRandoms()
     }
 }
+
 
 
 @Composable
@@ -296,7 +302,7 @@ fun myApp(viewModel: MyViewModel) {
                     viewModel.restartRondas()
                     viewModel.resetRecord()
                     lista_colores.clear()
-
+                    viewModel.clearListaRandoms()
                 }
 
             }
