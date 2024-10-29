@@ -219,16 +219,24 @@ fun showToast(context: Context = LocalContext.current, message: String, duration
 }
 
 @Composable
+fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
+    viewModel.showWin(context = LocalContext.current, message = "Has ganado")
+    viewModel.saveRecord()
+    viewModel.incrementRondas()
+    listaColores.clear()
+    viewModel.clearListaRandoms()
+    continueGameWhileWin(viewModel)
+}
+
+
+
+@Composable
 fun game(listaColores: MutableList<Int>, colorValor:Int, viewModel: MyViewModel): Unit {
 
     listaColores.add(colorValor)
 
     if (!viewModel.winOrLose(viewModel.getRandom(), listaColores)) {
-        viewModel.showLose(context = LocalContext.current, message = "Has perdido")
-        viewModel.restartRondas()
-        viewModel.resetRecord()
-        listaColores.clear()
-        viewModel.clearListaRandoms()
+
     } else if (listaColores.size == 3) {
         viewModel.showWin(context = LocalContext.current, message = "Has ganado")
         viewModel.saveRecord()
