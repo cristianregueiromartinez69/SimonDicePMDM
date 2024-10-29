@@ -203,6 +203,12 @@ fun startGame(
 }
 
 @Composable
+fun continueGameWhileWin(viewModel: MyViewModel){
+    showToast(context = LocalContext.current, message = "Introduce un numero del 1 al 4")
+    viewModel.setRandom()
+}
+
+@Composable
 fun showToast(context: Context = LocalContext.current, message: String, duration: Int = Toast.LENGTH_LONG){
 
     Toast.makeText(context,message,duration).show()
@@ -222,7 +228,6 @@ fun game(listaColores: MutableList<Int>, viewModel: MyViewModel): Unit {
             viewModel.showLose(context = LocalContext.current, message = "Has perdido")
             viewModel.restartRondas()
             listaColores.clear()
-
         }
     }
 }
@@ -282,6 +287,8 @@ fun myApp(viewModel: MyViewModel) {
                     viewModel.saveRecord()
                     viewModel.incrementRondas()
                     lista_colores.clear()
+                    continueGameWhileWin(viewModel)
+
                 }else{
                     viewModel.showLose(context = LocalContext.current, message = "Has perdido")
                     viewModel.restartRondas()
