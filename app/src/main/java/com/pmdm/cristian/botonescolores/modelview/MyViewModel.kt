@@ -40,7 +40,9 @@ class MyViewModel(): ViewModel() {
     fun saveRecord(){
         record.value++
         Datos.record = record.value
-        Datos.maxRecord = record.value
+        if (Datos.maxRecord < Datos.record){
+            Datos.maxRecord = Datos.record
+        }
     }
 
     /**
