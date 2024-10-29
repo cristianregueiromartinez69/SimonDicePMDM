@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pmdm.cristian.botonescolores.R
 import com.pmdm.cristian.botonescolores.model.Colores
+import com.pmdm.cristian.botonescolores.model.Datos
 import com.pmdm.cristian.botonescolores.modelview.MyViewModel
 
 @Composable
@@ -281,12 +282,13 @@ fun myApp(viewModel: MyViewModel) {
             startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel = viewModel)
 
 
-            if(lista_colores.size == 1){
+            if(lista_colores.size == 3){
                 if(viewModel.winOrLose(viewModel.getRandom(),lista_colores)){
                     viewModel.showWin(context = LocalContext.current, message = "Has ganado")
                     viewModel.saveRecord()
                     viewModel.incrementRondas()
                     lista_colores.clear()
+                    viewModel.clearListaRandoms()
                     continueGameWhileWin(viewModel)
 
                 }else{

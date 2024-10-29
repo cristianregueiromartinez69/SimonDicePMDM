@@ -95,21 +95,24 @@ class MyViewModel(): ViewModel() {
             Datos.listaNumerosRandom.add(numRandom.value)
             Datos.numRandom = numRandom.value
         }
+        Log.d("Random", Datos.listaNumerosRandom.toString())
     }
 
-    fun getRandom():List<Int>{
+    fun getRandom():MutableList<Int>{
         return Datos.listaNumerosRandom
     }
 
-    fun winOrLose(num:Int,listaColores:MutableList<Int>):Boolean{
+    fun clearListaRandoms(){
+        Datos.listaNumerosRandom.clear()
+    }
 
-        for(i in listaColores){
-            if(i == num){
-                return true
+    fun winOrLose(lista_Random:MutableList<Int>,listaColores:MutableList<Int>):Boolean{
+        for(i in lista_Random.indices){
+            if(lista_Random[i] != listaColores[i]){
+                return false
             }
-
         }
-        return false
+        return true
     }
 
 
