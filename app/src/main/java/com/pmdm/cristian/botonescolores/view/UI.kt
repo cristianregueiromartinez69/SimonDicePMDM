@@ -75,6 +75,19 @@ fun showRecord(record:Int){
 }
 
 @Composable
+fun RecordMaximo(record: Int){
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            .padding(top = 20.dp, start = 130.dp)) {
+
+        Text(text = "Mayor puntuación: $record" ,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.SemiBold)
+
+    }
+}
+
+@Composable
 fun botonesFila1(misColores: MutableList<Int>) {
     val listaColores = listOf(Color.Red, Color.Green)
 
@@ -209,6 +222,7 @@ fun game(listaColores: MutableList<Int>, viewModel: MyViewModel): Unit {
             viewModel.showLose(context = LocalContext.current, message = "Has perdido")
             viewModel.restartRondas()
             listaColores.clear()
+
         }
     }
 }
@@ -269,9 +283,11 @@ fun myApp(viewModel: MyViewModel) {
                     lista_colores.clear()
                 }else{
                     viewModel.showLose(context = LocalContext.current, message = "Has perdido")
+
                     viewModel.restartRondas()
                     viewModel.resetRecord()
                     lista_colores.clear()
+
                 }
 
             }
