@@ -90,12 +90,15 @@ class MyViewModel(): ViewModel() {
     }
 
     fun setRandom(){
-        numRandom.value = random.nextInt(4) + 1
-        Datos.numRandom = numRandom.value
+        for(i in 1..3){
+            numRandom.value = random.nextInt(4) + 1
+            Datos.listaNumerosRandom.add(numRandom.value)
+            Datos.numRandom = numRandom.value
+        }
     }
 
-    fun getRandom():Int{
-        return Datos.numRandom
+    fun getRandom():List<Int>{
+        return Datos.listaNumerosRandom
     }
 
     fun winOrLose(num:Int,listaColores:MutableList<Int>):Boolean{
