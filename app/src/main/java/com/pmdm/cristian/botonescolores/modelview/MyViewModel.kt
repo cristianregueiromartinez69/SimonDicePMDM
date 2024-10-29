@@ -49,6 +49,11 @@ class MyViewModel(): ViewModel() {
         return Datos.record
     }
 
+    fun resetRecord(){
+        record.value = 0
+        Datos.record = record.value
+    }
+
     /**
      * Metodo para incrementar las rondas y guardarlas en el singleton
      */
@@ -96,12 +101,12 @@ class MyViewModel(): ViewModel() {
     }
 
 
-    fun showLose(context: Context, message: String, duration: Int = Toast.LENGTH_LONG){
+    fun showLose(context: Context, message: String, duration: Int = Toast.LENGTH_SHORT){
 
         Toast.makeText(context,message,duration).show()
     }
 
-    fun showWin(context: Context, message: String, duration: Int = Toast.LENGTH_LONG){
+    fun showWin(context: Context, message: String, duration: Int = Toast.LENGTH_SHORT){
 
         Toast.makeText(context,message,duration).show()
     }

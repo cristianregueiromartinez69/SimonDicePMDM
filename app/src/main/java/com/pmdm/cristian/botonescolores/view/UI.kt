@@ -270,6 +270,7 @@ fun myApp(viewModel: MyViewModel) {
                 }else{
                     viewModel.showLose(context = LocalContext.current, message = "Has perdido")
                     viewModel.restartRondas()
+                    viewModel.resetRecord()
                     lista_colores.clear()
                 }
 
