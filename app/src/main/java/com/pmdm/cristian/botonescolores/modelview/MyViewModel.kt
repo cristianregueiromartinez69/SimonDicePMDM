@@ -39,9 +39,9 @@ class MyViewModel(): ViewModel() {
      */
     fun saveRecord(){
         record.value++
-        Datos.record = record.value
-        if (Datos.maxRecord < Datos.record){
-            Datos.maxRecord = Datos.record
+        Datos.aciertos = record.value
+        if (Datos.record < Datos.aciertos){
+            Datos.record = Datos.aciertos
         }
     }
 
@@ -49,16 +49,16 @@ class MyViewModel(): ViewModel() {
      * Metodo que nos devuelve el record actual
      */
     fun getRecord():Int{
-        return Datos.record
+        return Datos.aciertos
     }
 
     fun resetRecord(){
         record.value = 0
-        Datos.record = record.value
+        Datos.aciertos = record.value
     }
 
     fun getMaxRecord():Int{
-        return Datos.maxRecord
+        return Datos.record
     }
 
 
