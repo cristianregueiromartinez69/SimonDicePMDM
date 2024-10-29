@@ -237,8 +237,10 @@ fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>){
     viewModel.clearListaRandoms()
 }
 
+
 @Composable
-fun game(viewModel: MyViewModel, listaColores: MutableList<Int>){
+fun game(viewModel: MyViewModel, listaColores: MutableList<Int>, añadeNumeros:() -> Unit){
+    añadeNumeros()
     if(viewModel.winOrLose(viewModel.getRandom(),listaColores)){
         showWin(viewModel, listaColores)
     }
