@@ -64,7 +64,7 @@ fun showRecord(record:Int){
         modifier = Modifier
             .padding(top = 40.dp, start = 130.dp)) {
 
-        Text(text = "Record: $record" ,
+        Text(text = "Aciertos: $record" ,
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold)
 
@@ -78,11 +78,11 @@ fun showRecord(record:Int){
 fun RecordMaximo(record: Int){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-            .padding(top = 10.dp, start = 60.dp)) {
+            .padding(top = 10.dp, start = 130.dp)) {
 
-        Text(text = "Mayor puntuación: $record" ,
+        Text(text = "Record: $record" ,
             fontSize = 25.sp,
-            fontWeight = FontWeight.Thin)
+            fontWeight = FontWeight.Bold)
 
     }
 }
