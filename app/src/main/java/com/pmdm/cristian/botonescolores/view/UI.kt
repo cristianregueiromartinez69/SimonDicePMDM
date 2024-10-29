@@ -228,23 +228,28 @@ fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
     continueGameWhileWin(viewModel)
 }
 
-
+@Composable
+fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>){
+    viewModel.showLose(context = LocalContext.current, message = "Has perdido")
+    viewModel.restartRondas()
+    viewModel.resetRecord()
+    listaColores.clear()
+    viewModel.clearListaRandoms()
+}
 
 @Composable
-fun game(listaColores: MutableList<Int>, colorValor:Int, viewModel: MyViewModel): Unit {
-
-    listaColores.add(colorValor)
-
-    if (!viewModel.winOrLose(viewModel.getRandom(), listaColores)) {
-
-    } else if (listaColores.size == 3) {
-        viewModel.showWin(context = LocalContext.current, message = "Has ganado")
-        viewModel.saveRecord()
-        viewModel.incrementRondas()
-        listaColores.clear()
-        viewModel.clearListaRandoms()
+fun game(viewModel: MyViewModel, listaColores: MutableList<Int>){
+    if(viewModel.winOrLose(viewModel.getRandom(),listaColores)){
+        showWin(viewModel, listaColores)
+    }
+    else{
+        showLose(viewModel, listaColores)
     }
 }
+
+
+
+
 
 
 
