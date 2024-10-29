@@ -106,6 +106,10 @@ class MyViewModel(): ViewModel() {
         Datos.listaNumerosRandom.clear()
     }
 
+    fun añadirElementosListaColores(lista:MutableList<Int>, colorvalor:Int){
+        lista.add(colorvalor)
+    }
+
     fun winOrLose(lista_Random:MutableList<Int>,listaColores:MutableList<Int>):Boolean{
         for(i in lista_Random.indices){
             if(lista_Random[i] != listaColores[i]){

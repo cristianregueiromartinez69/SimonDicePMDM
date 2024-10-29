@@ -221,7 +221,7 @@ fun showToast(context: Context = LocalContext.current, message: String, duration
 @Composable
 fun game(listaColores: MutableList<Int>, colorValor:Int, viewModel: MyViewModel): Unit {
 
-    listaColores.add(colorValor) // Add color to the list
+    listaColores.add(colorValor)
 
     if (!viewModel.winOrLose(viewModel.getRandom(), listaColores)) {
         viewModel.showLose(context = LocalContext.current, message = "Has perdido")
@@ -313,6 +313,12 @@ fun myApp(viewModel: MyViewModel) {
 
 }
 
+/**
+ * Esta funcion recibe:
+ * 1. lista mutable
+ * 2. valor del color
+ * luego creamos 2 composables para derrota y victoria
+ */
 
 
 
