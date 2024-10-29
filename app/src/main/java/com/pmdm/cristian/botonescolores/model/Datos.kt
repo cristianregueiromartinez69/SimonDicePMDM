@@ -6,5 +6,6 @@ object Datos {
     var rondas = 0
     var numRandom = 0
     var record = 0
+    val listaNumerosRandom : MutableList<Int> = mutableListOf()
 
 }
