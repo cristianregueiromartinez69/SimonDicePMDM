@@ -40,6 +40,7 @@ class MyViewModel(): ViewModel() {
     fun saveRecord(){
         record.value++
         Datos.record = record.value
+        Datos.maxRecord = record.value
     }
 
     /**
@@ -53,6 +54,12 @@ class MyViewModel(): ViewModel() {
         record.value = 0
         Datos.record = record.value
     }
+
+    fun getMaxRecord():Int{
+        return Datos.maxRecord
+    }
+
+
 
     /**
      * Metodo para incrementar las rondas y guardarlas en el singleton

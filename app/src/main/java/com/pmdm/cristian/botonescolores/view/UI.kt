@@ -78,11 +78,11 @@ fun showRecord(record:Int){
 fun RecordMaximo(record: Int){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-            .padding(top = 20.dp, start = 130.dp)) {
+            .padding(top = 10.dp, start = 60.dp)) {
 
         Text(text = "Mayor puntuación: $record" ,
             fontSize = 25.sp,
-            fontWeight = FontWeight.SemiBold)
+            fontWeight = FontWeight.Thin)
 
     }
 }
@@ -247,6 +247,7 @@ fun myApp(viewModel: MyViewModel) {
         )
 
         Column {
+            RecordMaximo(viewModel.getMaxRecord())
             initialText(viewModel.getSaludoInicio())
             showRecord(viewModel.getRecord())
         }
@@ -283,7 +284,6 @@ fun myApp(viewModel: MyViewModel) {
                     lista_colores.clear()
                 }else{
                     viewModel.showLose(context = LocalContext.current, message = "Has perdido")
-
                     viewModel.restartRondas()
                     viewModel.resetRecord()
                     lista_colores.clear()

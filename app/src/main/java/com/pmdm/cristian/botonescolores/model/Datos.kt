@@ -5,5 +5,6 @@ object Datos {
     var record = 0
     var rondas = 0
     var numRandom = 0
+    var maxRecord = 0
 
 }
