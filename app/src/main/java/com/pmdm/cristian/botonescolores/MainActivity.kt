@@ -25,11 +25,14 @@ import com.pmdm.cristian.botonescolores.modelview.MyViewModel
 import com.pmdm.cristian.botonescolores.view.*
 
 
-
+/**
+ * Clase mainActivity donde ejecutamos la aplicación
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel : MyViewModel = MyViewModel()
+        //creamos un objeto de la clase Myviewmodel y los pasamos a la composable myApp
+        val viewModel = MyViewModel()
         enableEdgeToEdge()
         setContent {
             myApp(viewModel)

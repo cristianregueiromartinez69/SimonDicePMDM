@@ -38,6 +38,9 @@ import com.pmdm.cristian.botonescolores.model.Datos
 import com.pmdm.cristian.botonescolores.modelview.MyViewModel
 import kotlin.text.clear
 
+/**
+ * Interfaz con el texto del saludo de simon dice
+ */
 @Composable
 fun initialText(bienvenido:String) {
 
@@ -59,24 +62,30 @@ fun initialText(bienvenido:String) {
 
 }
 
+/**
+ * Interfaz para mostrar el numero de aciertos del usuario
+ */
 @Composable
-fun showRecord(record:Int){
+fun showAciertos(aciertos:Int){
 
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(top = 40.dp, start = 130.dp)) {
 
-        Text(text = "Aciertos: $record" ,
+        Text(text = "Aciertos: $aciertos" ,
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold)
 
-        Log.d("Record", record.toString())
+        Log.d("Record", aciertos.toString())
 
     }
 
 }
 
+/**
+ * Interfaz para mostrar el record maximo del usuario en el juego
+ */
 @Composable
 fun RecordMaximo(record: Int){
     Column(verticalArrangement = Arrangement.Center,
@@ -90,6 +99,9 @@ fun RecordMaximo(record: Int){
     }
 }
 
+/**
+ * Interfaz con la fila primera de los botones
+ */
 @Composable
 fun botonesFila1(misColores: MutableList<Int>) {
     val listaColores = listOf(Color.Red, Color.Green)
@@ -115,6 +127,9 @@ fun botonesFila1(misColores: MutableList<Int>) {
     }
 }
 
+/**
+ * Interfaz con la fila segunda de los botones
+ */
 @Composable
 fun botonesFila2(misColores: MutableList<Int>) {
     val listaColores = listOf(Color.Blue, Color.Yellow)
@@ -140,6 +155,9 @@ fun botonesFila2(misColores: MutableList<Int>) {
     }
 }
 
+/**
+ * Interfaz para mostrar las rondas que lleva el usuario
+ */
 @Composable
 fun showRondas(numeroRondas: Int){
 
@@ -156,6 +174,9 @@ fun showRondas(numeroRondas: Int){
 
 }
 
+/**
+ * Interfaz que muestra el boton de start
+ */
 @Composable
 fun showButtonStart(isButtonvisible: MutableState<Boolean>, playGame:(boolean:MutableState<Boolean>) -> Unit):Boolean {
     val rosa = Color(0xFFFF00C9)
@@ -187,6 +208,9 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>, playGame:(boolean:Mu
     return isButtonvisible.value
 }
 
+/**
+ * Interfaz para mostrar una toast de inicio de juego cuando el usuario pulsa el boton start
+ */
 @Composable
 fun startGame(
     isStartButtonPressed: MutableState<Boolean>,
@@ -203,14 +227,22 @@ fun startGame(
 
 
     }
+
+    viewModel.loseGameAndShowAgainToast(isStartButtonPressed, presioneStart1)
 }
 
+/**
+ * Interfaz para indicar al usuario los botones que tiene que ir pulsando según avanza en el juego
+ */
 @Composable
 fun continueGameWhileWin(viewModel: MyViewModel){
     showToast(context = LocalContext.current, message = "Pulsa " + viewModel.returnContador() + " botornes")
     viewModel.setRandom()
 }
 
+/**
+ * Interfaz para indicar un mensaje en el juego
+ */
 @Composable
 fun showToast(context: Context = LocalContext.current, message: String, duration: Int = Toast.LENGTH_SHORT){
 
@@ -218,6 +250,9 @@ fun showToast(context: Context = LocalContext.current, message: String, duration
 
 }
 
+/**
+ * interfaz para mostrar un mensaje de ganador al usuario cuando gana una ronda
+ */
 @Composable
 fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
     viewModel.showWin(context = LocalContext.current, message = "Has ganado")
@@ -229,33 +264,37 @@ fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
     continueGameWhileWin(viewModel)
 }
 
+/**
+ * interfaz para mostrar un mensaje de perdedor al usuario cuando gana una ronda
+ */
 @Composable
-fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>){
+fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton:MutableState<Boolean>){
     viewModel.showLose(context = LocalContext.current, message = "Has perdido")
     viewModel.restartRondas()
     viewModel.resetRecord()
     viewModel.clearListaColores(listaColores)
     viewModel.clearListaRandoms()
     viewModel.restartContador()
+    startButton.value = true
 }
 
-
+/**
+ * Interfaz para mostrar la victoria o derrota dependiendo de si el usuario gana o pierde
+ */
 @Composable
-fun game(viewModel: MyViewModel, listaColores: MutableList<Int>){
+fun game(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton: MutableState<Boolean>){
     if(viewModel.winOrLose(viewModel.getRandom(),listaColores)){
         showWin(viewModel, listaColores)
     }
     else{
-        showLose(viewModel, listaColores)
+        showLose(viewModel, listaColores, startButton)
     }
 }
 
 
-
-
-
-
-
+/**
+ * app principal del juego
+ */
 @Composable
 fun myApp(viewModel: MyViewModel) {
     var lista_colores = remember { mutableStateListOf<Int>() }
@@ -278,7 +317,7 @@ fun myApp(viewModel: MyViewModel) {
         Column {
             RecordMaximo(viewModel.getMaxRecord())
             initialText(viewModel.getSaludoInicio())
-            showRecord(viewModel.getRecord())
+            showAciertos(viewModel.getRecord())
         }
 
 
@@ -307,7 +346,7 @@ fun myApp(viewModel: MyViewModel) {
 
             if(lista_colores.size == viewModel.returnContador()){
 
-                game(viewModel, lista_colores)
+                game(viewModel, lista_colores, isStartButtonPressed)
 
             }
 
