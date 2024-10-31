@@ -156,6 +156,3 @@ class MyViewModel(): ViewModel() {
 
 }
 
-/**
- * genera una lista de 3 randoms y el usuario le da 3 veces a los botones comparando los indices de la lista con los randoms
- */

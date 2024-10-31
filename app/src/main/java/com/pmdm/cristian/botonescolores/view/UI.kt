@@ -212,7 +212,7 @@ fun continueGameWhileWin(viewModel: MyViewModel){
 }
 
 @Composable
-fun showToast(context: Context = LocalContext.current, message: String, duration: Int = Toast.LENGTH_LONG){
+fun showToast(context: Context = LocalContext.current, message: String, duration: Int = Toast.LENGTH_SHORT){
 
     Toast.makeText(context,message,duration).show()
 
@@ -318,12 +318,6 @@ fun myApp(viewModel: MyViewModel) {
 
 }
 
-/**
- * Esta funcion recibe:
- * 1. lista mutable
- * 2. valor del color
- * luego creamos 2 composables para derrota y victoria
- */
 
 
 
