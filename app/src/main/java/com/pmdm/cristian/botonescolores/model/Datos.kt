@@ -8,4 +8,7 @@ object Datos {
     var record = 0
     val listaNumerosRandom : MutableList<Int> = mutableListOf()
 
+    var contador = 1
+
+
 }

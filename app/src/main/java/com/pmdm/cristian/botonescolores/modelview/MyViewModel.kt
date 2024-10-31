@@ -23,6 +23,7 @@ class MyViewModel(): ViewModel() {
 
     var numRandom = mutableStateOf(0)
 
+    var contador = mutableStateOf(1)
 
 
     /**
@@ -31,6 +32,20 @@ class MyViewModel(): ViewModel() {
     fun getSaludoInicio():String{
 
         return saludoInicio
+    }
+
+    fun incrementContador(){
+        contador.value++
+        Datos.contador = contador.value
+    }
+
+    fun restartContador(){
+        contador.value = 1
+        Datos.contador = contador.value
+    }
+
+    fun returnContador():Int{
+        return Datos.contador
     }
 
 
@@ -90,7 +105,7 @@ class MyViewModel(): ViewModel() {
     }
 
     fun setRandom(){
-        for(i in 1..3){
+        for(i in 1..returnContador()){
             numRandom.value = random.nextInt(4) + 1
             Datos.listaNumerosRandom.add(numRandom.value)
             Datos.numRandom = numRandom.value
@@ -106,9 +121,7 @@ class MyViewModel(): ViewModel() {
         Datos.listaNumerosRandom.clear()
     }
 
-    fun añadirElementosListaColores(lista:MutableList<Int>, colorvalor:Int){
-        lista.add(colorvalor)
-    }
+
 
     fun clearListaColores(lista:MutableList<Int>){
         lista.clear()

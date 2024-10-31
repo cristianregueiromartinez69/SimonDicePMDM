@@ -197,7 +197,7 @@ fun startGame(
     if (!showButtonStart(isStartButtonPressed, viewModel::logicalStartButton)) {
 
         if (!presioneStart1.value) {
-            showToast(context = LocalContext.current, message = "Pulsa 3 colores")
+            showToast(context = LocalContext.current, message = "Pulsa 1 boton")
             presioneStart1.value = true
         }
 
@@ -207,7 +207,7 @@ fun startGame(
 
 @Composable
 fun continueGameWhileWin(viewModel: MyViewModel){
-    showToast(context = LocalContext.current, message = "Vuelve a pulsar 3 botones")
+    showToast(context = LocalContext.current, message = "Pulsa " + viewModel.returnContador() + " botornes")
     viewModel.setRandom()
 }
 
@@ -225,6 +225,7 @@ fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
     viewModel.incrementRondas()
     viewModel.clearListaColores(listaColores)
     viewModel.clearListaRandoms()
+    viewModel.incrementContador()
     continueGameWhileWin(viewModel)
 }
 
@@ -235,6 +236,7 @@ fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>){
     viewModel.resetRecord()
     viewModel.clearListaColores(listaColores)
     viewModel.clearListaRandoms()
+    viewModel.restartContador()
 }
 
 
@@ -259,6 +261,7 @@ fun myApp(viewModel: MyViewModel) {
     var lista_colores = remember { mutableStateListOf<Int>() }
     val isStartButtonPressed = remember { mutableStateOf(true) }
     var presioneStart = remember { mutableStateOf(false) }
+
 
 
     Box (modifier = Modifier
@@ -302,11 +305,12 @@ fun myApp(viewModel: MyViewModel) {
             startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel = viewModel)
 
 
-            if(lista_colores.size == 3){
+            if(lista_colores.size == viewModel.returnContador()){
 
                 game(viewModel, lista_colores)
 
             }
+
 
 
         }
