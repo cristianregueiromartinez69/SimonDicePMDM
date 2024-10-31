@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import com.pmdm.cristian.botonescolores.model.Datos
+import com.pmdm.cristian.botonescolores.view.showWin
 import kotlin.random.Random
 
 class MyViewModel(): ViewModel() {
@@ -196,12 +197,38 @@ class MyViewModel(): ViewModel() {
         Toast.makeText(context,message,duration).show()
     }
     /**
-     * funcion que crea una toast en la que se muestra al usuario que perdió la ronda
+     * funcion de logica de ganador de rondas
+     * 1. guardamos el record
+     * 2. incrementamos las rondas
+     * 3. limpiamos la lista de colores
+     * 4. limpiamos la lista de randoms de maquina
+     * 5. incrementamos el contador para las rondas
      */
-    fun showWin(context: Context, message: String, duration: Int = Toast.LENGTH_SHORT){
-
-        Toast.makeText(context,message,duration).show()
+    fun onWin(listaColores: MutableList<Int>) {
+        saveRecord()
+        incrementRondas()
+        clearListaColores(listaColores)
+        clearListaRandoms()
+        incrementContador()
     }
+
+    /**
+     * funcion de logica de perdedor de rondas
+     * 1. reseteamos los aciertos
+     * 2. reseteamos las rondas
+     * 3. limpiamos la lista de colores
+     * 4. limpiamos la lista de randoms de maquina
+     * 5. bajamos el contador a 1 de nuevo
+     */
+    fun onLose(listaColores: MutableList<Int>, showStartButton: MutableState<Boolean>){
+        restartRondas()
+        resetRecord()
+        clearListaColores(listaColores)
+        clearListaRandoms()
+        restartContador()
+        showStartButton.value = true
+    }
+
 
     /**
      * logica para llamar a la toast que muestra al usuario cuantos botones tiene que pulsar si pierde una ronda

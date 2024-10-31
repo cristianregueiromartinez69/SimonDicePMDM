@@ -17,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -231,14 +232,7 @@ fun startGame(
     viewModel.loseGameAndShowAgainToast(isStartButtonPressed, presioneStart1)
 }
 
-/**
- * Interfaz para indicar al usuario los botones que tiene que ir pulsando según avanza en el juego
- */
-@Composable
-fun continueGameWhileWin(viewModel: MyViewModel){
-    showToast(context = LocalContext.current, message = "Pulsa " + viewModel.returnContador() + " botornes")
-    viewModel.setRandom()
-}
+
 
 /**
  * Interfaz para indicar un mensaje en el juego
@@ -255,13 +249,13 @@ fun showToast(context: Context = LocalContext.current, message: String, duration
  */
 @Composable
 fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
-    viewModel.showWin(context = LocalContext.current, message = "Has ganado")
-    viewModel.saveRecord()
-    viewModel.incrementRondas()
-    viewModel.clearListaColores(listaColores)
-    viewModel.clearListaRandoms()
-    viewModel.incrementContador()
-    continueGameWhileWin(viewModel)
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        Toast.makeText(context, "Has ganado", Toast.LENGTH_SHORT).show()
+        viewModel.onWin(listaColores)
+        Toast.makeText(context, "Pulsa " + viewModel.returnContador() + " botones", Toast.LENGTH_SHORT).show()
+        viewModel.setRandom()
+    }
 }
 
 /**
@@ -269,13 +263,11 @@ fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
  */
 @Composable
 fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton:MutableState<Boolean>){
-    viewModel.showLose(context = LocalContext.current, message = "Has perdido")
-    viewModel.restartRondas()
-    viewModel.resetRecord()
-    viewModel.clearListaColores(listaColores)
-    viewModel.clearListaRandoms()
-    viewModel.restartContador()
-    startButton.value = true
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        Toast.makeText(context, "Has perdido", Toast.LENGTH_SHORT).show()
+        viewModel.onLose(listaColores, startButton)
+    }
 }
 
 /**
