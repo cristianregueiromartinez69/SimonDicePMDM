@@ -104,10 +104,10 @@ fun RecordMaximo(record: Int){
  * Interfaz con el boton rojo
  */
 @Composable
-fun buttonRed(listaColores: MutableList<Int>){
+fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
     Button(
         onClick = {
-            listaColores.add(Colores.ROJO.valorColor)
+            viewModel.addColor(colorValor,listaColores)
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Red,
@@ -125,11 +125,10 @@ fun buttonRed(listaColores: MutableList<Int>){
  * Interfaz con el boton verde
  */
 @Composable
-fun buttonGreen(listaColores: MutableList<Int>){
+fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
     Button(
         onClick = {
-            listaColores.add(Colores.VERDE.valorColor)
-        },
+            viewModel.addColor(colorValor,listaColores)        },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Green,
         ),
@@ -146,10 +145,10 @@ fun buttonGreen(listaColores: MutableList<Int>){
  * Interfaz con el boton azul
  */
 @Composable
-fun buttonBlue(listaColores: MutableList<Int>){
+fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
     Button(
         onClick = {
-            listaColores.add(Colores.AZUL.valorColor)
+            viewModel.addColor(colorValor,listaColores)
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Blue,
@@ -167,10 +166,10 @@ fun buttonBlue(listaColores: MutableList<Int>){
  * Interfaz con el boton amarillo
  */
 @Composable
-fun buttonYellow(listaColores: MutableList<Int>){
+fun buttonYellow(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
     Button(
         onClick = {
-            listaColores.add(Colores.AMARILLO.valorColor)
+            viewModel.addColor(colorValor,listaColores)
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Yellow,
@@ -354,13 +353,13 @@ fun myApp(viewModel: MyViewModel) {
 
             Row {
 
-                buttonRed(lista_colores)
-                buttonGreen(lista_colores)
+                buttonRed(viewModel, lista_colores, Colores.ROJO.valorColor)
+                buttonGreen(viewModel, lista_colores, Colores.VERDE.valorColor)
             }
 
             Row {
-                buttonBlue(lista_colores)
-                buttonYellow(lista_colores)
+                buttonBlue(viewModel, lista_colores, Colores.AZUL.valorColor)
+                buttonYellow(viewModel, lista_colores, Colores.AMARILLO.valorColor)
             }
 
             showRondas(viewModel.getRondas())

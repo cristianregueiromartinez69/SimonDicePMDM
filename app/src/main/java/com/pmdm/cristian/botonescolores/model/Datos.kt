@@ -19,5 +19,6 @@ object Datos {
     //el contador para incrementar la lista
     var contador = 1
 
+    var listaColores : MutableList<Int> = mutableListOf()
 
 }
