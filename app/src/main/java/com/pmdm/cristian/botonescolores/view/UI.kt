@@ -101,60 +101,90 @@ fun RecordMaximo(record: Int){
 }
 
 /**
- * Interfaz con la fila primera de los botones
+ * Interfaz con el boton rojo
  */
 @Composable
-fun botonesFila1(misColores: MutableList<Int>) {
-    val listaColores = listOf(Color.Red, Color.Green)
+fun buttonRed(listaColores: MutableList<Int>){
+    Button(
+        onClick = {
+            listaColores.add(Colores.ROJO.valorColor)
+        },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Red,
+        ),
+        modifier = Modifier
+            .clip(CircleShape)
+            .padding(3.dp)
+            .size(95.dp)
+    ){
 
-    @Composable
-    fun crearBoton(color: Color, colorValor: Int) {
-        Button(
-            onClick = { misColores.add(colorValor) },
-            colors = ButtonDefaults.buttonColors(containerColor = color),
-            modifier = Modifier
-                .clip(CircleShape)
-                .padding(3.dp)
-                .size(95.dp)
-        ) {
-        }
-    }
-
-    for (color in listaColores) {
-        when (color) {
-            Color.Red -> crearBoton(color, Colores.ROJO.valorColor)
-            Color.Green -> crearBoton(color, Colores.VERDE.valorColor)
-        }
     }
 }
 
 /**
- * Interfaz con la fila segunda de los botones
+ * Interfaz con el boton verde
  */
 @Composable
-fun botonesFila2(misColores: MutableList<Int>) {
-    val listaColores = listOf(Color.Blue, Color.Yellow)
+fun buttonGreen(listaColores: MutableList<Int>){
+    Button(
+        onClick = {
+            listaColores.add(Colores.VERDE.valorColor)
+        },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Green,
+        ),
+        modifier = Modifier
+            .clip(CircleShape)
+            .padding(3.dp)
+            .size(95.dp)
+    ){
 
-    @Composable
-    fun crearBoton(color: Color, colorValor: Int) {
-        Button(
-            onClick = { misColores.add(colorValor) },
-            colors = ButtonDefaults.buttonColors(containerColor = color),
-            modifier = Modifier
-                .clip(CircleShape)
-                .padding(3.dp)
-                .size(95.dp)
-        ) {
-        }
-    }
-
-    for (color in listaColores) {
-        when (color) {
-            Color.Blue -> crearBoton(color, Colores.AZUL.valorColor)
-            Color.Yellow -> crearBoton(color, Colores.AMARILLO.valorColor)
-        }
     }
 }
+
+/**
+ * Interfaz con el boton azul
+ */
+@Composable
+fun buttonBlue(listaColores: MutableList<Int>){
+    Button(
+        onClick = {
+            listaColores.add(Colores.AZUL.valorColor)
+        },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Blue,
+        ),
+        modifier = Modifier
+            .clip(CircleShape)
+            .padding(3.dp)
+            .size(95.dp)
+    ){
+
+    }
+}
+
+/**
+ * Interfaz con el boton amarillo
+ */
+@Composable
+fun buttonYellow(listaColores: MutableList<Int>){
+    Button(
+        onClick = {
+            listaColores.add(Colores.AMARILLO.valorColor)
+        },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Yellow,
+        ),
+        modifier = Modifier
+            .clip(CircleShape)
+            .padding(3.dp)
+            .size(95.dp)
+    ){
+
+    }
+}
+
+
 
 /**
  * Interfaz para mostrar las rondas que lleva el usuario
@@ -324,11 +354,13 @@ fun myApp(viewModel: MyViewModel) {
 
             Row {
 
-                botonesFila1(lista_colores)
+                buttonRed(lista_colores)
+                buttonGreen(lista_colores)
             }
 
             Row {
-                botonesFila2(lista_colores)
+                buttonBlue(lista_colores)
+                buttonYellow(lista_colores)
             }
 
             showRondas(viewModel.getRondas())
@@ -348,7 +380,6 @@ fun myApp(viewModel: MyViewModel) {
     }
 
 }
-
 
 
 
