@@ -104,10 +104,10 @@ fun RecordMaximo(record: Int){
  * Interfaz con el boton rojo
  */
 @Composable
-fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
+fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
     Button(
         onClick = {
-            viewModel.addColor(colorValor,listaColores)
+            viewModel.addColor(colorValor,listaColores, isStartButtonPressed)
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Red,
@@ -125,10 +125,10 @@ fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor
  * Interfaz con el boton verde
  */
 @Composable
-fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
+fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
     Button(
         onClick = {
-            viewModel.addColor(colorValor,listaColores)        },
+            viewModel.addColor(colorValor,listaColores, isStartButtonPressed)        },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Green,
         ),
@@ -145,10 +145,10 @@ fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorVal
  * Interfaz con el boton azul
  */
 @Composable
-fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
+fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
     Button(
         onClick = {
-            viewModel.addColor(colorValor,listaColores)
+            viewModel.addColor(colorValor,listaColores, isStartButtonPressed)
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Blue,
@@ -166,10 +166,10 @@ fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValo
  * Interfaz con el boton amarillo
  */
 @Composable
-fun buttonYellow(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
+fun buttonYellow(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
     Button(
         onClick = {
-            viewModel.addColor(colorValor,listaColores)
+            viewModel.addColor(colorValor,listaColores, isStartButtonPressed)
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Yellow,
@@ -239,7 +239,7 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>, playGame:(boolean:Mu
 }
 
 /**
- * Interfaz para mostrar una toast de inicio de juego cuando el usuario pulsa el boton start
+ * Interfaz para mostrar una toast de inicio de juego cuando el usuario pulsa start
  */
 @Composable
 fun startGame(
@@ -353,13 +353,13 @@ fun myApp(viewModel: MyViewModel) {
 
             Row {
 
-                buttonRed(viewModel, lista_colores, Colores.ROJO.valorColor)
-                buttonGreen(viewModel, lista_colores, Colores.VERDE.valorColor)
+                buttonRed(viewModel, lista_colores, Colores.ROJO.valorColor, isStartButtonPressed)
+                buttonGreen(viewModel, lista_colores, Colores.VERDE.valorColor, isStartButtonPressed)
             }
 
             Row {
-                buttonBlue(viewModel, lista_colores, Colores.AZUL.valorColor)
-                buttonYellow(viewModel, lista_colores, Colores.AMARILLO.valorColor)
+                buttonBlue(viewModel, lista_colores, Colores.AZUL.valorColor, isStartButtonPressed)
+                buttonYellow(viewModel, lista_colores, Colores.AMARILLO.valorColor, isStartButtonPressed)
             }
 
             showRondas(viewModel.getRondas())

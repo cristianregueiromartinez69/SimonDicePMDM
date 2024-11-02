@@ -175,19 +175,14 @@ class MyViewModel(): ViewModel() {
         lista.clear()
     }
 
-    fun addColor(numero:Int, listaColoresR: MutableList<Int>){
-        listaColoresR.add(numero)
-        Datos.listaColores = listaColoresR
+    fun addColor(numero:Int, listaColoresR: MutableList<Int>, canPlay:MutableState<Boolean>){
+        if(!canPlay.value){
+            listaColoresR.add(numero)
+            Datos.listaColores = listaColoresR
+        }
     }
 
-    fun resetListaColores(listaColoresR: MutableList<Int>){
-        listaColoresR.clear()
-        Datos.listaColores = listaColoresR
-    }
 
-    fun getListaColores():MutableList<Int>{
-        return Datos.listaColores
-    }
 
     /**
      * logica para saber si el usuario ganó o perdió la partida
