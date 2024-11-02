@@ -380,7 +380,7 @@ fun myApp(viewModel: MyViewModel) {
 
 }
 
-
+//TODO: hacer corte al fallo del jugador
 
 
 
