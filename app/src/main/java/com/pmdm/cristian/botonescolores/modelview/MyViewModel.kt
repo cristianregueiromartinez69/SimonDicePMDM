@@ -137,7 +137,6 @@ class MyViewModel(): ViewModel() {
     fun logicalStartButton(presioneStart1: MutableState<Boolean>):Unit{
         presioneStart1.value = false
         setRandom()
-        Log.d("Random", getRandom().toString())
     }
 
     /**
