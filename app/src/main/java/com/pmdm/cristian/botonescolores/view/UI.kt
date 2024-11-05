@@ -242,7 +242,15 @@ fun showRondas(numeroRondas: Int){
  * Interfaz que muestra el boton de start
  */
 @Composable
-fun showButtonStart(isButtonvisible: MutableState<Boolean>, playGame:(boolean:MutableState<Boolean>) -> Unit):Boolean {
+fun showButtonStart(isButtonvisible: MutableState<Boolean>, viewModel: MyViewModel, playGame:(boolean:MutableState<Boolean>) -> Unit):Boolean {
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.startActivo) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.startActivo
+    }
+
+
     val rosa = Color(0xFFFF00C9)
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -251,7 +259,9 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>, playGame:(boolean:Mu
     {
 
         if(isButtonvisible.value){
-            Button(onClick = { playGame(isButtonvisible) },
+            Button(
+                enabled = _activo,
+                onClick = { playGame(isButtonvisible) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = rosa,
                     contentColor = Color.Black
@@ -282,7 +292,7 @@ fun startGame(
     viewModel: MyViewModel
 ) {
 
-    if (!showButtonStart(isStartButtonPressed, viewModel::logicalStartButton)) {
+    if (!showButtonStart(isStartButtonPressed, viewModel, viewModel::logicalStartButton)) {
 
         if (!presioneStart1.value) {
             showToast(context = LocalContext.current, message = "Pulsa 1 boton")

@@ -155,6 +155,8 @@ class MyViewModel(): ViewModel() {
             Datos.numRandom = numRandom.value
         }
         Log.d("Random", Datos.listaNumerosRandom.toString())
+        estadoLiveData.value = Estados.ADVININANDO
+
     }
 
     /**
@@ -181,7 +183,6 @@ class MyViewModel(): ViewModel() {
 
     fun addColor(numero:Int, listaColoresR: MutableList<Int>, canPlay:MutableState<Boolean>){
 
-        estadoLiveData.value = Estados.ADVININANDO
         listaColoresR.add(numero)
         Datos.listaColores = listaColoresR
 
