@@ -19,9 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -105,6 +107,9 @@ fun RecordMaximo(record: Int){
  */
 @Composable
 fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
     Button(
         onClick = {
             viewModel.addColor(colorValor,listaColores, isStartButtonPressed)

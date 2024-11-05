@@ -180,10 +180,11 @@ class MyViewModel(): ViewModel() {
     }
 
     fun addColor(numero:Int, listaColoresR: MutableList<Int>, canPlay:MutableState<Boolean>){
-        if(!canPlay.value){
-            listaColoresR.add(numero)
-            Datos.listaColores = listaColoresR
-        }
+
+        estadoLiveData.value = Estados.ADVININANDO
+        listaColoresR.add(numero)
+        Datos.listaColores = listaColoresR
+
     }
 
 
@@ -212,6 +213,7 @@ class MyViewModel(): ViewModel() {
      * 5. incrementamos el contador para las rondas
      */
     fun onWin(listaColores: MutableList<Int>) {
+        estadoLiveData.value = Estados.GENERNANDO
         saveRecord()
         incrementRondas()
         clearListaColores(listaColores)
@@ -228,6 +230,7 @@ class MyViewModel(): ViewModel() {
      * 5. bajamos el contador a 1 de nuevo
      */
     fun onLose(listaColores: MutableList<Int>, showStartButton: MutableState<Boolean>){
+        estadoLiveData.value = Estados.INICIO
         restartRondas()
         resetRecord()
         clearListaColores(listaColores)
