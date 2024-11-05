@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pmdm.cristian.botonescolores.model.Datos
+import com.pmdm.cristian.botonescolores.model.Estados
 import com.pmdm.cristian.botonescolores.view.showWin
 import kotlin.random.Random
 
@@ -30,6 +32,8 @@ class MyViewModel(): ViewModel() {
 
     //contador para aumentar el numero de secuencias de la partida
     var contador = mutableStateOf(1)
+
+    val estadoLiveData : MutableLiveData<Estados> = MutableLiveData(Estados.INICIO)
 
 
     /**
@@ -143,6 +147,7 @@ class MyViewModel(): ViewModel() {
      * metodo que hace una secuencia de numeros aleatorios
      */
     fun setRandom(){
+        estadoLiveData.value = Estados.GENERNANDO
         //el for va desde 1 hasta lo que nos devuelve le metodo contador
         for(i in 1..returnContador()){
             numRandom.value = random.nextInt(4) + 1
