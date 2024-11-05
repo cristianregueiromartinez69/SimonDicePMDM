@@ -137,7 +137,16 @@ fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor
  */
 @Composable
 fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
+    }
+
+
     Button(
+        enabled = _activo,
         onClick = {
             viewModel.addColor(colorValor,listaColores, isStartButtonPressed)        },
         colors = ButtonDefaults.buttonColors(
@@ -157,7 +166,14 @@ fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorVal
  */
 @Composable
 fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
+    }
     Button(
+        enabled = _activo,
         onClick = {
             viewModel.addColor(colorValor,listaColores, isStartButtonPressed)
         },
@@ -178,7 +194,14 @@ fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValo
  */
 @Composable
 fun buttonYellow(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
+    }
     Button(
+        enabled = _activo,
         onClick = {
             viewModel.addColor(colorValor,listaColores, isStartButtonPressed)
         },
