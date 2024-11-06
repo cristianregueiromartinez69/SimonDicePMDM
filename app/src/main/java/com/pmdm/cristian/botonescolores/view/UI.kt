@@ -297,6 +297,7 @@ fun startGame(
         if (!presioneStart1.value) {
             showToast(context = LocalContext.current, message = "Pulsa 1 boton")
             presioneStart1.value = true
+
         }
 
 

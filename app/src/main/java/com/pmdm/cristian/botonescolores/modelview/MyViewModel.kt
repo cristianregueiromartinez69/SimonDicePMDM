@@ -156,8 +156,10 @@ class MyViewModel(): ViewModel() {
         }
         Log.d("Random", Datos.listaNumerosRandom.toString())
         estadoLiveData.value = Estados.ADVININANDO
-
     }
+
+
+
 
     /**
      * metodo para devolver la lista de numeros randoms
