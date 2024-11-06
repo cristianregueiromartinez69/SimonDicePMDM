@@ -19,9 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -105,7 +108,15 @@ fun RecordMaximo(record: Int){
  */
 @Composable
 fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
+    }
+
     Button(
+        enabled = _activo,
         onClick = {
             viewModel.addColor(colorValor,listaColores, isStartButtonPressed)
         },
@@ -126,7 +137,16 @@ fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor
  */
 @Composable
 fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
+    }
+
+
     Button(
+        enabled = _activo,
         onClick = {
             viewModel.addColor(colorValor,listaColores, isStartButtonPressed)        },
         colors = ButtonDefaults.buttonColors(
@@ -146,7 +166,14 @@ fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorVal
  */
 @Composable
 fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
+    }
     Button(
+        enabled = _activo,
         onClick = {
             viewModel.addColor(colorValor,listaColores, isStartButtonPressed)
         },
@@ -167,7 +194,14 @@ fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValo
  */
 @Composable
 fun buttonYellow(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, isStartButtonPressed: MutableState<Boolean>){
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
+    }
     Button(
+        enabled = _activo,
         onClick = {
             viewModel.addColor(colorValor,listaColores, isStartButtonPressed)
         },
@@ -208,7 +242,15 @@ fun showRondas(numeroRondas: Int){
  * Interfaz que muestra el boton de start
  */
 @Composable
-fun showButtonStart(isButtonvisible: MutableState<Boolean>, playGame:(boolean:MutableState<Boolean>) -> Unit):Boolean {
+fun showButtonStart(isButtonvisible: MutableState<Boolean>, viewModel: MyViewModel, playGame:(boolean:MutableState<Boolean>) -> Unit):Boolean {
+
+    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.startActivo) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.startActivo
+    }
+
+
     val rosa = Color(0xFFFF00C9)
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -217,7 +259,9 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>, playGame:(boolean:Mu
     {
 
         if(isButtonvisible.value){
-            Button(onClick = { playGame(isButtonvisible) },
+            Button(
+                enabled = _activo,
+                onClick = { playGame(isButtonvisible) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = rosa,
                     contentColor = Color.Black
@@ -248,11 +292,12 @@ fun startGame(
     viewModel: MyViewModel
 ) {
 
-    if (!showButtonStart(isStartButtonPressed, viewModel::logicalStartButton)) {
+    if (!showButtonStart(isStartButtonPressed, viewModel, viewModel::logicalStartButton)) {
 
         if (!presioneStart1.value) {
             showToast(context = LocalContext.current, message = "Pulsa 1 boton")
             presioneStart1.value = true
+
         }
 
 

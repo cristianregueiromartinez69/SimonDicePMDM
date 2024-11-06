@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pmdm.cristian.botonescolores.model.Datos
+import com.pmdm.cristian.botonescolores.model.Estados
 import com.pmdm.cristian.botonescolores.view.showWin
 import kotlin.random.Random
 
@@ -30,6 +32,8 @@ class MyViewModel(): ViewModel() {
 
     //contador para aumentar el numero de secuencias de la partida
     var contador = mutableStateOf(1)
+
+    val estadoLiveData : MutableLiveData<Estados> = MutableLiveData(Estados.INICIO)
 
 
     /**
@@ -143,6 +147,7 @@ class MyViewModel(): ViewModel() {
      * metodo que hace una secuencia de numeros aleatorios
      */
     fun setRandom(){
+        estadoLiveData.value = Estados.GENERNANDO
         //el for va desde 1 hasta lo que nos devuelve le metodo contador
         for(i in 1..returnContador()){
             numRandom.value = random.nextInt(4) + 1
@@ -150,7 +155,11 @@ class MyViewModel(): ViewModel() {
             Datos.numRandom = numRandom.value
         }
         Log.d("Random", Datos.listaNumerosRandom.toString())
+        estadoLiveData.value = Estados.ADVININANDO
     }
+
+
+
 
     /**
      * metodo para devolver la lista de numeros randoms
@@ -175,10 +184,10 @@ class MyViewModel(): ViewModel() {
     }
 
     fun addColor(numero:Int, listaColoresR: MutableList<Int>, canPlay:MutableState<Boolean>){
-        if(!canPlay.value){
-            listaColoresR.add(numero)
-            Datos.listaColores = listaColoresR
-        }
+
+        listaColoresR.add(numero)
+        Datos.listaColores = listaColoresR
+
     }
 
 
@@ -207,6 +216,7 @@ class MyViewModel(): ViewModel() {
      * 5. incrementamos el contador para las rondas
      */
     fun onWin(listaColores: MutableList<Int>) {
+        estadoLiveData.value = Estados.GENERNANDO
         saveRecord()
         incrementRondas()
         clearListaColores(listaColores)
@@ -223,6 +233,7 @@ class MyViewModel(): ViewModel() {
      * 5. bajamos el contador a 1 de nuevo
      */
     fun onLose(listaColores: MutableList<Int>, showStartButton: MutableState<Boolean>){
+        estadoLiveData.value = Estados.INICIO
         restartRondas()
         resetRecord()
         clearListaColores(listaColores)
