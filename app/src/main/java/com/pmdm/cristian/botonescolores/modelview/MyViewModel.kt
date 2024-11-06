@@ -183,7 +183,7 @@ class MyViewModel(): ViewModel() {
         lista.clear()
     }
 
-    fun addColor(numero:Int, listaColoresR: MutableList<Int>, canPlay:MutableState<Boolean>){
+    fun addColor(numero:Int, listaColoresR: MutableList<Int>){
 
         listaColoresR.add(numero)
         Datos.listaColores = listaColoresR
