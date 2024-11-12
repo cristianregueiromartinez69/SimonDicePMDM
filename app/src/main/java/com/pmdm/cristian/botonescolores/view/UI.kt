@@ -212,9 +212,8 @@ fun startGame(
 fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
     val context = LocalContext.current
     LaunchedEffect(Unit) {
-        Toast.makeText(context, "Has ganado", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
         viewModel.onWin(listaColores)
-        Toast.makeText(context, "Pulsa " + viewModel.returnContador() + " botones", Toast.LENGTH_SHORT).show()
         viewModel.setRandom()
     }
 }
@@ -226,7 +225,7 @@ fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
 fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton:MutableState<Boolean>){
     val context = LocalContext.current
     LaunchedEffect(Unit) {
-        Toast.makeText(context, "Has perdido", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Perdiste", Toast.LENGTH_SHORT).show()
         viewModel.onLose(listaColores, startButton)
     }
 }
