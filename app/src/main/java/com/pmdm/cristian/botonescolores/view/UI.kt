@@ -209,12 +209,11 @@ fun startGame(
  * interfaz para mostrar un mensaje de ganador al usuario cuando gana una ronda
  */
 @Composable
-fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>){
+fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton:MutableState<Boolean>){
     val context = LocalContext.current
     LaunchedEffect(Unit) {
         Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
-        viewModel.onWin(listaColores)
-        viewModel.setRandom()
+        viewModel.onWin(listaColores, startButton)
     }
 }
 
@@ -236,7 +235,7 @@ fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton
 @Composable
 fun game(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton: MutableState<Boolean>){
     if(viewModel.winOrLose(viewModel.getRandom(),listaColores)){
-        showWin(viewModel, listaColores)
+        showWin(viewModel, listaColores, startButton)
     }
     else{
         showLose(viewModel, listaColores, startButton)

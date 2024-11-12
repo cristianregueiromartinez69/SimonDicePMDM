@@ -135,6 +135,7 @@ class MyViewModel(): ViewModel() {
      * Logica una vez el usuario pulse el boton de start
      */
     fun logicalStartButton(presioneStart1: MutableState<Boolean>):Unit{
+        estadoLiveData.value = Estados.GENERNANDO
         presioneStart1.value = false
         setRandom()
     }
@@ -143,15 +144,13 @@ class MyViewModel(): ViewModel() {
      * metodo que hace una secuencia de numeros aleatorios
      */
     fun setRandom(){
-        estadoLiveData.value = Estados.GENERNANDO
         //el for va desde 1 hasta lo que nos devuelve le metodo contador
-
+            estadoLiveData.value = Estados.ADVININANDO
             numRandom.value = random.nextInt(4) + 1
             Datos.listaNumerosRandom.add(numRandom.value)
             Datos.numRandom = numRandom.value
 
         Log.d("Random", Datos.listaNumerosRandom.toString())
-        estadoLiveData.value = Estados.ADVININANDO
     }
 
 
@@ -211,12 +210,13 @@ class MyViewModel(): ViewModel() {
      * 4. limpiamos la lista de randoms de maquina
      * 5. incrementamos el contador para las rondas
      */
-    fun onWin(listaColores: MutableList<Int>) {
-        estadoLiveData.value = Estados.GENERNANDO
+    fun onWin(listaColores: MutableList<Int>, showStartButton: MutableState<Boolean>) {
+        estadoLiveData.value = Estados.INICIO
         saveRecord()
         incrementRondas()
         clearListaColores(listaColores)
         incrementContador()
+        showStartButton.value = true
     }
 
     /**
