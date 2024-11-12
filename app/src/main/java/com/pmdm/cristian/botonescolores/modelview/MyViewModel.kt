@@ -149,11 +149,11 @@ class MyViewModel(): ViewModel() {
     fun setRandom(){
         estadoLiveData.value = Estados.GENERNANDO
         //el for va desde 1 hasta lo que nos devuelve le metodo contador
-        for(i in 1..returnContador()){
+
             numRandom.value = random.nextInt(4) + 1
             Datos.listaNumerosRandom.add(numRandom.value)
             Datos.numRandom = numRandom.value
-        }
+
         Log.d("Random", Datos.listaNumerosRandom.toString())
         estadoLiveData.value = Estados.ADVININANDO
     }
@@ -220,7 +220,6 @@ class MyViewModel(): ViewModel() {
         saveRecord()
         incrementRondas()
         clearListaColores(listaColores)
-        clearListaRandoms()
         incrementContador()
     }
 
