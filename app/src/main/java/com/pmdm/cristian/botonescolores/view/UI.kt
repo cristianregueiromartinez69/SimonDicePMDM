@@ -38,33 +38,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pmdm.cristian.botonescolores.R
 import com.pmdm.cristian.botonescolores.model.Colores
+import com.pmdm.cristian.botonescolores.model.ColoresIluminados
 import com.pmdm.cristian.botonescolores.model.Datos
 import com.pmdm.cristian.botonescolores.modelview.MyViewModel
 import kotlin.text.clear
 
-/**
- * Interfaz con el texto del saludo de simon dice
- */
-@Composable
-fun initialText(bienvenido:String) {
 
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(
-            start = 90.dp,
-            top = 80.dp
-        )
-    ) {
-        Text(
-            text = bienvenido,
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-    }
-
-}
 
 /**
  * Interfaz para mostrar el numero de aciertos del usuario
@@ -75,7 +54,7 @@ fun showAciertos(aciertos:Int){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(top = 40.dp, start = 130.dp)) {
+            .padding(top = 90.dp, start = 126.dp)) {
 
         Text(text = "Aciertos: $aciertos" ,
             fontSize = 25.sp,
@@ -94,7 +73,7 @@ fun showAciertos(aciertos:Int){
 fun RecordMaximo(record: Int){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-            .padding(top = 10.dp, start = 130.dp)) {
+            .padding(top = 50.dp, start = 130.dp)) {
 
         Text(text = "Record: $record" ,
             fontSize = 25.sp,
@@ -107,7 +86,7 @@ fun RecordMaximo(record: Int){
  * Interfaz con el boton rojo
  */
 @Composable
-fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
+fun buttonColor(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, color: ColoresIluminados){
 
     var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
 
@@ -121,7 +100,7 @@ fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor
             viewModel.addColor(colorValor,listaColores)
         },
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Red,
+            containerColor = color.colorNomal,
         ),
         modifier = Modifier
             .clip(CircleShape)
@@ -132,90 +111,7 @@ fun buttonRed(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor
     }
 }
 
-/**
- * Interfaz con el boton verde
- */
-@Composable
-fun buttonGreen(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
 
-    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
-
-    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
-        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
-    }
-
-
-    Button(
-        enabled = _activo,
-        onClick = {
-            viewModel.addColor(colorValor,listaColores)        },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Green,
-        ),
-        modifier = Modifier
-            .clip(CircleShape)
-            .padding(3.dp)
-            .size(95.dp)
-    ){
-
-    }
-}
-
-/**
- * Interfaz con el boton azul
- */
-@Composable
-fun buttonBlue(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
-
-    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
-
-    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
-        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
-    }
-    Button(
-        enabled = _activo,
-        onClick = {
-            viewModel.addColor(colorValor,listaColores)
-        },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Blue,
-        ),
-        modifier = Modifier
-            .clip(CircleShape)
-            .padding(3.dp)
-            .size(95.dp)
-    ){
-
-    }
-}
-
-/**
- * Interfaz con el boton amarillo
- */
-@Composable
-fun buttonYellow(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int){
-
-    var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
-
-    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
-        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
-    }
-    Button(
-        enabled = _activo,
-        onClick = {
-            viewModel.addColor(colorValor,listaColores)
-        },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Yellow,
-        ),
-        modifier = Modifier
-            .clip(CircleShape)
-            .padding(3.dp)
-            .size(95.dp)
-    ){
-
-    }
-}
 
 
 
@@ -295,7 +191,7 @@ fun startGame(
     if (!showButtonStart(isStartButtonPressed, viewModel, viewModel::logicalStartButton)) {
 
         if (!presioneStart1.value) {
-            showToast(context = LocalContext.current, message = "Pulsa 1 boton")
+
             presioneStart1.value = true
         }
 
@@ -307,15 +203,7 @@ fun startGame(
 
 
 
-/**
- * Interfaz para indicar un mensaje en el juego
- */
-@Composable
-fun showToast(context: Context = LocalContext.current, message: String, duration: Int = Toast.LENGTH_SHORT){
 
-    Toast.makeText(context,message,duration).show()
-
-}
 
 /**
  * interfaz para mostrar un mensaje de ganador al usuario cuando gana una ronda
@@ -365,6 +253,7 @@ fun myApp(viewModel: MyViewModel) {
     var lista_colores = remember { mutableStateListOf<Int>() }
     val isStartButtonPressed = remember { mutableStateOf(true) }
     var presioneStart = remember { mutableStateOf(false) }
+    var listaColoresIluminados = remember { mutableStateOf(ColoresIluminados.entries.toTypedArray())}
 
 
 
@@ -381,7 +270,6 @@ fun myApp(viewModel: MyViewModel) {
 
         Column {
             RecordMaximo(viewModel.getMaxRecord())
-            initialText(viewModel.getSaludoInicio())
             showAciertos(viewModel.getRecord())
         }
 
@@ -397,13 +285,15 @@ fun myApp(viewModel: MyViewModel) {
 
             Row {
 
-                buttonRed(viewModel, lista_colores, Colores.ROJO.valorColor)
-                buttonGreen(viewModel, lista_colores, Colores.VERDE.valorColor)
+                buttonColor(viewModel, lista_colores, Colores.ROJO.valorColor,
+                    listaColoresIluminados.component1()[0]
+                )
+                buttonColor(viewModel, lista_colores, Colores.VERDE.valorColor, listaColoresIluminados.component1()[1])
             }
 
             Row {
-                buttonBlue(viewModel, lista_colores, Colores.AZUL.valorColor)
-                buttonYellow(viewModel, lista_colores, Colores.AMARILLO.valorColor)
+                buttonColor(viewModel, lista_colores, Colores.AZUL.valorColor, listaColoresIluminados.component1()[2])
+                buttonColor(viewModel, lista_colores, Colores.AMARILLO.valorColor, listaColoresIluminados.component1()[3])
             }
 
             showRondas(viewModel.getRondas())
@@ -424,7 +314,6 @@ fun myApp(viewModel: MyViewModel) {
 
 }
 
-//TODO: hacer corte al fallo del jugador
 
 
 

@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.pmdm.cristian.botonescolores.model.Colores
 import com.pmdm.cristian.botonescolores.model.Datos
 import com.pmdm.cristian.botonescolores.model.Estados
 import com.pmdm.cristian.botonescolores.view.showWin
@@ -15,8 +16,7 @@ import kotlin.random.Random
 
 class MyViewModel(): ViewModel() {
 
-    //varialbe que almacena el saludo inicial del juego
-    private val saludoInicio:String = "¡SIMON DICE!"
+
 
     //variable record para el record
     var record = mutableStateOf(0)
@@ -36,13 +36,9 @@ class MyViewModel(): ViewModel() {
     val estadoLiveData : MutableLiveData<Estados> = MutableLiveData(Estados.INICIO)
 
 
-    /**
-     * Método que devuelve el saludo inicial
-     */
-    fun getSaludoInicio():String{
 
-        return saludoInicio
-    }
+
+
 
     /**
      * Metodo para incrementar el contador de secuencia del simon dice
