@@ -19,7 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.record
 import com.pmdm.cristian.botonescolores.R
 import com.pmdm.cristian.botonescolores.model.Colores
 import com.pmdm.cristian.botonescolores.model.ColoresIluminados
@@ -50,7 +53,6 @@ import kotlin.text.clear
  */
 @Composable
 fun showAciertos(aciertos:Int){
-
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -70,7 +72,7 @@ fun showAciertos(aciertos:Int){
  * Interfaz para mostrar el record maximo del usuario en el juego
  */
 @Composable
-fun RecordMaximo(record: Int){
+fun RecordMaximo(record:Int){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
             .padding(top = 50.dp, start = 130.dp)) {
@@ -86,7 +88,7 @@ fun RecordMaximo(record: Int){
  * Interfaz con el boton rojo
  */
 @Composable
-fun buttonColor(viewModel: MyViewModel, listaColores: MutableList<Int>, colorValor:Int, color: ColoresIluminados){
+fun buttonColor(viewModel: MyViewModel, listaColores: MutableList<Int>, lista_Random:MutableList<Int>, colorValor:Int, color: ColoresIluminados){
 
     var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
 
@@ -97,7 +99,7 @@ fun buttonColor(viewModel: MyViewModel, listaColores: MutableList<Int>, colorVal
     Button(
         enabled = _activo,
         onClick = {
-            viewModel.addColor(colorValor,listaColores)
+            viewModel.addColor(colorValor,listaColores, lista_Random)
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = color.colorNomal,
@@ -119,7 +121,7 @@ fun buttonColor(viewModel: MyViewModel, listaColores: MutableList<Int>, colorVal
  * Interfaz para mostrar las rondas que lleva el usuario
  */
 @Composable
-fun showRondas(numeroRondas: Int){
+fun showRondas(numeroRondas:Int){
 
     Text(
 
@@ -138,7 +140,7 @@ fun showRondas(numeroRondas: Int){
  * Interfaz que muestra el boton de start
  */
 @Composable
-fun showButtonStart(isButtonvisible: MutableState<Boolean>, viewModel: MyViewModel, playGame:(boolean:MutableState<Boolean>) -> Unit):Boolean {
+fun showButtonStart(viewModel: MyViewModel){
 
     var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.startActivo) }
 
@@ -153,11 +155,9 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>, viewModel: MyViewMod
         modifier = Modifier
             .padding(top = 40.dp))
     {
-
-        if(isButtonvisible.value){
             Button(
                 enabled = _activo,
-                onClick = { playGame(isButtonvisible) },
+                onClick = { viewModel.setRandom() },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = rosa,
                     contentColor = Color.Black
@@ -175,72 +175,19 @@ fun showButtonStart(isButtonvisible: MutableState<Boolean>, viewModel: MyViewMod
 
 
     }
-    return isButtonvisible.value
-}
-
-/**
- * Interfaz para mostrar una toast de inicio de juego cuando el usuario pulsa start
- */
-@Composable
-fun startGame(
-    isStartButtonPressed: MutableState<Boolean>,
-    presioneStart1: MutableState<Boolean>,
-    viewModel: MyViewModel
-) {
-
-    if (!showButtonStart(isStartButtonPressed, viewModel, viewModel::logicalStartButton)) {
-
-        if (!presioneStart1.value) {
-
-            presioneStart1.value = true
-        }
-
-
-    }
-
-    viewModel.loseGameAndShowAgainToast(isStartButtonPressed, presioneStart1)
-}
 
 
 
 
 
-/**
- * interfaz para mostrar un mensaje de ganador al usuario cuando gana una ronda
- */
-@Composable
-fun showWin(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton:MutableState<Boolean>){
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        Toast.makeText(context, "Ganaste", Toast.LENGTH_SHORT).show()
-        viewModel.onWin(listaColores, startButton)
-    }
-}
 
-/**
- * interfaz para mostrar un mensaje de perdedor al usuario cuando gana una ronda
- */
-@Composable
-fun showLose(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton:MutableState<Boolean>){
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        Toast.makeText(context, "Perdiste", Toast.LENGTH_SHORT).show()
-        viewModel.onLose(listaColores, startButton)
-    }
-}
 
-/**
- * Interfaz para mostrar la victoria o derrota dependiendo de si el usuario gana o pierde
- */
-@Composable
-fun game(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton: MutableState<Boolean>){
-    if(viewModel.winOrLose(viewModel.getRandom(),listaColores)){
-        showWin(viewModel, listaColores, startButton)
-    }
-    else{
-        showLose(viewModel, listaColores, startButton)
-    }
-}
+
+
+
+
+
+
 
 
 /**
@@ -248,9 +195,14 @@ fun game(viewModel: MyViewModel, listaColores: MutableList<Int>, startButton: Mu
  */
 @Composable
 fun myApp(viewModel: MyViewModel) {
+
+    val record by viewModel.recordLiveData.observeAsState(viewModel.getRecord())
+    val rondas by viewModel.rondasLiveData.observeAsState(viewModel.getRondas())
+    val aciertos by viewModel.aciertosLiveData.observeAsState(viewModel.getAciertos())
+
+
+
     var lista_colores = remember { mutableStateListOf<Int>() }
-    val isStartButtonPressed = remember { mutableStateOf(true) }
-    var presioneStart = remember { mutableStateOf(false) }
     var listaColoresIluminados = remember { mutableStateOf(ColoresIluminados.entries.toTypedArray())}
 
 
@@ -267,8 +219,8 @@ fun myApp(viewModel: MyViewModel) {
         )
 
         Column {
-            RecordMaximo(viewModel.getMaxRecord())
-            showAciertos(viewModel.getRecord())
+            RecordMaximo(record)
+            showAciertos(aciertos)
         }
 
 
@@ -283,27 +235,20 @@ fun myApp(viewModel: MyViewModel) {
 
             Row {
 
-                buttonColor(viewModel, lista_colores, Colores.ROJO.valorColor,
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.ROJO.valorColor,
                     listaColoresIluminados.component1()[0]
                 )
-                buttonColor(viewModel, lista_colores, Colores.VERDE.valorColor, listaColoresIluminados.component1()[1])
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.VERDE.valorColor, listaColoresIluminados.component1()[1])
             }
 
             Row {
-                buttonColor(viewModel, lista_colores, Colores.AZUL.valorColor, listaColoresIluminados.component1()[2])
-                buttonColor(viewModel, lista_colores, Colores.AMARILLO.valorColor, listaColoresIluminados.component1()[3])
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.AZUL.valorColor, listaColoresIluminados.component1()[2])
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.AMARILLO.valorColor, listaColoresIluminados.component1()[3])
             }
 
-            showRondas(viewModel.getRondas())
+            showRondas(rondas)
 
-            startGame(isStartButtonPressed, presioneStart1 = presioneStart, viewModel = viewModel)
-
-
-            if(lista_colores.size == viewModel.returnContador()){
-
-                game(viewModel, lista_colores, isStartButtonPressed)
-
-            }
+            showButtonStart(viewModel)
 
 
 

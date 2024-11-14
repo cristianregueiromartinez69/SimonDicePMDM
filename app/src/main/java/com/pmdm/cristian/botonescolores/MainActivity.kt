@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//TODO: hacer que ganes o pierdas la ronda, el boton de start vuelva a aparecer tras cada ronda
+//TODO: hacer corte al perder
 
 
 

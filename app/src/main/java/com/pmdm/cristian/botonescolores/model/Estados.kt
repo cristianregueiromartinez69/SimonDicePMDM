@@ -12,7 +12,6 @@ enum class Estados(val startActivo: Boolean, val botonesColoresActivos:Boolean){
      * 3. Advininando -> cuando el usuario teclea os botones de colores para adivinar los numeros
      */
     INICIO(startActivo = true, botonesColoresActivos = false),
-    GENERNANDO(startActivo = false, botonesColoresActivos = false),
-    ADVININANDO(startActivo = false, botonesColoresActivos = true)
+    ADIVINANDO(startActivo = false, botonesColoresActivos = true),
 
 }

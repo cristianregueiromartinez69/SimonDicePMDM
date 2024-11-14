@@ -1,5 +1,7 @@
 package com.pmdm.cristian.botonescolores.model
 
+import androidx.compose.runtime.mutableStateOf
+
 /**
  * Singletons con los datos de la aplicacion
  */
@@ -16,8 +18,6 @@ object Datos {
     //la lista de numeros randoms de la maquina
     val listaNumerosRandom : MutableList<Int> = mutableListOf()
 
-    //el contador para incrementar la lista
-    var contador = 1
 
     var listaColores : MutableList<Int> = mutableListOf()
 
