@@ -1,14 +1,11 @@
 package com.pmdm.cristian.botonescolores.view
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,9 +14,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
@@ -32,20 +26,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.record
 import com.pmdm.cristian.botonescolores.R
 import com.pmdm.cristian.botonescolores.model.Colores
-import com.pmdm.cristian.botonescolores.model.ColoresIluminados
-import com.pmdm.cristian.botonescolores.model.Datos
 import com.pmdm.cristian.botonescolores.modelview.MyViewModel
-import kotlin.text.clear
-
 
 
 /**
@@ -88,7 +76,7 @@ fun RecordMaximo(record:Int){
  * Interfaz con el boton rojo
  */
 @Composable
-fun buttonColor(viewModel: MyViewModel, listaColores: MutableList<Int>, lista_Random:MutableList<Int>, colorValor:Int, color: ColoresIluminados){
+fun buttonColor(viewModel: MyViewModel, listaColores: MutableList<Int>, lista_Random:MutableList<Int>, colorValor:Int, color: Color){
 
     var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
 
@@ -102,7 +90,7 @@ fun buttonColor(viewModel: MyViewModel, listaColores: MutableList<Int>, lista_Ra
             viewModel.addColor(colorValor,listaColores, lista_Random)
         },
         colors = ButtonDefaults.buttonColors(
-            containerColor = color.colorNomal,
+            containerColor = color,
         ),
         modifier = Modifier
             .clip(CircleShape)
@@ -178,18 +166,6 @@ fun showButtonStart(viewModel: MyViewModel){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * app principal del juego
  */
@@ -203,7 +179,11 @@ fun myApp(viewModel: MyViewModel) {
 
 
     var lista_colores = remember { mutableStateListOf<Int>() }
-    var listaColoresIluminados = remember { mutableStateOf(ColoresIluminados.entries.toTypedArray())}
+
+    val colorRojo by viewModel.colorRojoLiveData.observeAsState(viewModel.getColorRed())
+    val colorVerde by viewModel.colorVerdeLiveData.observeAsState(viewModel.getColorGreen())
+    val colorAzul by viewModel.colorAzulLiveData.observeAsState(viewModel.getColorBlue())
+    val colorAmarillo by viewModel.colorAmarilloLiveData.observeAsState(viewModel.getColorYellow())
 
 
 
@@ -236,14 +216,14 @@ fun myApp(viewModel: MyViewModel) {
             Row {
 
                 buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.ROJO.valorColor,
-                    listaColoresIluminados.component1()[0]
+                    colorRojo
                 )
-                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.VERDE.valorColor, listaColoresIluminados.component1()[1])
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.VERDE.valorColor, colorVerde)
             }
 
             Row {
-                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.AZUL.valorColor, listaColoresIluminados.component1()[2])
-                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.AMARILLO.valorColor, listaColoresIluminados.component1()[3])
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.AZUL.valorColor, colorAzul)
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.AMARILLO.valorColor, colorAmarillo)
             }
 
             showRondas(rondas)

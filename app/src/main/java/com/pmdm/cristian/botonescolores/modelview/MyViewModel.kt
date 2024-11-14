@@ -1,9 +1,12 @@
 package com.pmdm.cristian.botonescolores.modelview
 
 import android.util.Log
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.pmdm.cristian.botonescolores.model.ColoresIluminados
 import com.pmdm.cristian.botonescolores.model.Datos
 import com.pmdm.cristian.botonescolores.model.Estados
 import kotlin.random.Random
@@ -11,6 +14,8 @@ import com.pmdm.cristian.botonescolores.model.Datos.record
 import com.pmdm.cristian.botonescolores.model.Datos.rondas
 import com.pmdm.cristian.botonescolores.model.Datos.aciertos
 import com.pmdm.cristian.botonescolores.model.Datos.numRandom
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MyViewModel(): ViewModel() {
 
@@ -26,6 +31,25 @@ class MyViewModel(): ViewModel() {
 
     private val _aciertosLiveData = MutableLiveData<Int>()
     val aciertosLiveData: LiveData<Int> get() = _aciertosLiveData
+
+    private var _colorRojoLiveData = MutableLiveData<Color>()
+    val colorRojoLiveData : LiveData<Color> get() = _colorRojoLiveData
+
+    private var _colorVerdeLiveData = MutableLiveData<Color>()
+    val colorVerdeLiveData : LiveData<Color> get() = _colorVerdeLiveData
+
+    private var _colorAzulLiveData = MutableLiveData<Color>()
+    val colorAzulLiveData : LiveData<Color> get() = _colorAzulLiveData
+
+    private var _colorAmarilloLiveData = MutableLiveData<Color>()
+    val colorAmarilloLiveData : LiveData<Color> get() = _colorAmarilloLiveData
+
+    init {
+        _colorRojoLiveData.value = ColoresIluminados.ROJO_PARPADEO.colorNomal
+        _colorVerdeLiveData.value = ColoresIluminados.VERDE_PARPADEO.colorNomal
+        _colorAzulLiveData.value = ColoresIluminados.AZUL_PARPADEO.colorNomal
+        _colorAmarilloLiveData.value = ColoresIluminados.AMARILLO_PARPADEO.colorNomal
+    }
 
     init {
         _recordLiveData.value = record
@@ -84,7 +108,7 @@ class MyViewModel(): ViewModel() {
             numRandom = random.nextInt(4) + 1
             Datos.listaNumerosRandom.add(numRandom)
             estadoLiveData.value = Estados.ADIVINANDO
-
+            cambiosColores(Datos.listaNumerosRandom)
         Log.d("Random", Datos.listaNumerosRandom.toString())
     }
 
@@ -179,6 +203,56 @@ class MyViewModel(): ViewModel() {
         clearListaColores(listaColores)
         clearListaRandoms()
     }
+
+    private fun cambiosColores(lista_Random: MutableList<Int>){
+        viewModelScope.launch {
+            for(i in 0 until lista_Random.size){
+                if(lista_Random[i] == 1){
+                    delay(500)
+                    _colorRojoLiveData.value = Color(0xFFFF9999)
+                    delay(500)
+                    _colorRojoLiveData.value = ColoresIluminados.ROJO_PARPADEO.colorNomal
+                    delay(500)
+                }
+                else if(lista_Random[i] == 2){
+                    delay(500)
+                    _colorVerdeLiveData.value = Color(0xFFA8FFAA)
+                    delay(500)
+                    _colorVerdeLiveData.value = ColoresIluminados.VERDE_PARPADEO.colorNomal
+                    delay(500)
+                }
+                else if(lista_Random[i] == 3){
+                    delay(500)
+                    _colorAzulLiveData.value = Color(0xFF5F85FF)
+                    delay(500)
+                    _colorAzulLiveData.value = ColoresIluminados.AZUL_PARPADEO.colorNomal
+                    delay(500)
+                }
+                else if (lista_Random[i] == 4){
+                    delay(500)
+                    _colorAmarilloLiveData.value = Color(0xFFFCFFBE)
+                    delay(500)
+                    _colorAmarilloLiveData.value = ColoresIluminados.AMARILLO_PARPADEO.colorNomal
+                    delay(500)
+                }
+            }
+        }
+    }
+
+    fun getColorRed():Color{
+        return ColoresIluminados.ROJO_PARPADEO.colorNomal
+    }
+    fun getColorGreen():Color{
+        return ColoresIluminados.VERDE_PARPADEO.colorNomal
+    }
+    fun getColorBlue():Color{
+        return ColoresIluminados.AZUL_PARPADEO.colorNomal
+    }
+    fun getColorYellow():Color{
+        return ColoresIluminados.AMARILLO_PARPADEO.colorNomal
+    }
+
+
 
 
 

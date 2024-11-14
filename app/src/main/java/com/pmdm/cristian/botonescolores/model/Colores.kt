@@ -14,8 +14,8 @@ enum class Colores(val valorColor:Int){
 }
 
 enum class ColoresIluminados(var colorNomal : Color, var colorIluminado:Color = Color.Transparent){
-    ROJO_PARPADEO(colorNomal = Color.Red),
-    VERDE_PARPADEO(colorNomal = Color.Green),
-    AZUL_PARPADEO(colorNomal = Color.Blue),
-    AMARILLO_PARPADEO(colorNomal = Color.Yellow)
+    ROJO_PARPADEO(colorNomal = Color(0xFFFF0000)),
+    VERDE_PARPADEO(colorNomal = Color(0xFF00FE08)),
+    AZUL_PARPADEO(colorNomal = Color(0xFF0017FF)),
+    AMARILLO_PARPADEO(colorNomal = Color(0xFFF0FF00))
 }

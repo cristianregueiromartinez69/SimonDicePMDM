@@ -40,7 +40,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//TODO: hacer corte al perder
+/*
+Live data de colores
+hacer curutina en viewmodel
+ponerlo luego en UI
+ */
 
 
 
