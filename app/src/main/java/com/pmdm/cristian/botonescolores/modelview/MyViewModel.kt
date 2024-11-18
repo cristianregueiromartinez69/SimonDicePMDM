@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pmdm.cristian.botonescolores.model.Colores
 import com.pmdm.cristian.botonescolores.model.ColoresIluminados
 import com.pmdm.cristian.botonescolores.model.Datos
 import com.pmdm.cristian.botonescolores.model.Estados
@@ -237,6 +238,19 @@ class MyViewModel(): ViewModel() {
                 }
             }
         }
+    }
+
+    fun getValorColorRojo():Int{
+        return Colores.ROJO.valorColor
+    }
+    fun getValorColorVerde():Int{
+        return Colores.VERDE.valorColor
+    }
+    fun getValorColorAzul():Int{
+        return Colores.AZUL.valorColor
+    }
+    fun getValorColorAmarillo():Int{
+        return Colores.AMARILLO.valorColor
     }
 
     fun getColorRed():Color{

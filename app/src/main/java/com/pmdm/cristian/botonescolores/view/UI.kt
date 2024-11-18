@@ -215,15 +215,15 @@ fun myApp(viewModel: MyViewModel) {
 
             Row {
 
-                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.ROJO.valorColor,
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), viewModel.getValorColorRojo(),
                     colorRojo
                 )
-                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.VERDE.valorColor, colorVerde)
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), viewModel.getValorColorVerde(), colorVerde)
             }
 
             Row {
-                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.AZUL.valorColor, colorAzul)
-                buttonColor(viewModel, lista_colores, viewModel.getRandom(), Colores.AMARILLO.valorColor, colorAmarillo)
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), viewModel.getValorColorAzul(), colorAzul)
+                buttonColor(viewModel, lista_colores, viewModel.getRandom(), viewModel.getValorColorAmarillo(), colorAmarillo)
             }
 
             showRondas(rondas)
