@@ -102,7 +102,7 @@ fun myApp(viewModel: MyViewModel) {
 }
 ```
 
-**Explicación** :relaxed:
+**Explicación** :smile:
 Esta es la UI principal, evidentemente no voy a poner todo el codigo de la UI, pero si la principal para que se vea como se va haciendo un escalado de la aplicación.
 Podemos observar lo siguiente:
 1. Esta UI es la principal, la cual tiene un @Composable para indicar que es una interfaz de usuario
@@ -112,4 +112,124 @@ Podemos observar lo siguiente:
 5. El Objeto modifier lo usamos para rediseñar la UI y ponerle diferentes parámetros según como queremos que quede la interfaz
 6. El escalado de la aplicaicón lo podemos observar mediante que en los elementos como Row, dentro llamamos a otras composables
 
+### 5. Explicación del viewModel: :smile:
 
+```bash
+class MyViewModel(): ViewModel() {
+
+    var random = Random
+
+    val estadoLiveData : MutableLiveData<Estados> = MutableLiveData(Estados.INICIO)
+
+    private val _recordLiveData = MutableLiveData<Int>()
+
+fun winOrLose(lista_Random: MutableList<Int>, listaColores: MutableList<Int>){
+        if(listaColores.size <= lista_Random.size){
+            auxWinOrLose(lista_Random, listaColores)
+        }
+    }
+
+    private fun auxWinOrLose(lista_Random:MutableList<Int>,listaColores:MutableList<Int>){
+        if(lista_Random == listaColores){
+            onWin(listaColores)
+            Log.d("random", "ganaste")
+            Log.d("randomRe", getRecord().toString())
+            Log.d("randomAc", getAciertos().toString())
+            Log.d("randomRor", getRondas().toString())
+        }
+        else if (lista_Random.subList(0, listaColores.size) == listaColores){
+            Log.d("TAG", "CORRECTO")
+        }
+        else{
+            Log.d("random", "perdiste")
+            onLose(listaColores)
+        }
+    }
+```
+En el código anterior podemos obsevar que es todo lógica de la aplicación. No podemos tener ninguna composable en el viewModel y tiene que cumplir lo siguiente:
+1. El viewModel es el responsable de la comunicación entre la UI y los datos(model)
+2. En el viewModel se maneja la lógica del negocio
+3. Si queremos que un cambio del viewModel se refleje en la UI, debemos declarar esa variable coo MutableLiveData y observarla en la UI
+4. La clase viewModel debe de heredar sí o sí de ViewModel()
+
+### 6.  Explicación de los Datos :smile:
+```bash
+#Ejemplo de Singleton
+object Datos {
+
+    //los aciertos que lleva el usuario
+    var aciertos = 0
+    //las rondas que lleva el usuario
+    var rondas = 0
+    // los numeros randoms para meter en la lista de la maquina
+    var numRandom = 0
+    //el record maximo del usuario
+    var record = 0
+    //la lista de numeros randoms de la maquina
+    val listaNumerosRandom : MutableList<Int> = mutableListOf()
+
+
+    var listaColores : MutableList<Int> = mutableListOf()
+
+}
+
+#Ejemplo de clase enum con los estados
+enum class Estados(val startActivo: Boolean, val botonesColoresActivos:Boolean){
+
+    /**
+     * Estados de la aplicación
+     * 1. Inicio -> cuando se inicia la aplicación y aun no le dimos al start
+     * 2. Generando -> cuando la maquina genera los numeros randoms cuando le das al start y salen las toast informadoras
+     * 3. Advininando -> cuando el usuario teclea os botones de colores para adivinar los numeros
+     */
+    INICIO(startActivo = true, botonesColoresActivos = false),
+    ADIVINANDO(startActivo = false, botonesColoresActivos = true),
+
+}
+```
+En el ejemplo anterior observamos algunas cosas:
+1. Los datos de la aplicación no tiene ningún tipo de lógica, solo contiene datos
+2. La clase object es un singleton que podemos instanciar muchas veces pero será el mismo objeto
+3. Con la clase enum podemos manejar estados de la aplicación
+
+### 7. Como funciona el programa :smile:
+1. El usuario entra en la aplicación y los botones de colores están deshabilitados
+2. En ese momento nos encontramos en el estado inicio, este estado hace que el start esté habilitado y los botones de colores no
+3. Cuando el usuario pulsa ell botón der start, pasamos a otro estado, que es el generando, en el cual el start está deshabilitado y los botones de colores también
+4. Se genera un numero aleatorio entre el 1 y el 4 y se añade a una lista
+5. Una vez se genera el número, pasamos al estado Adivinando, en el cual el start sigue deshabilitado y los botones de colores se habilitan
+6. Tenemos 4 colores, cada 1 representa un numero del 1 al 4
+7. El usuario debe de adivinar el numero.
+8. La pista que se le da al usuario es que cuando le da al start, se ilumina el color el cual tiene que pulsar
+9. SI el usuario acierta, se aumentan las rondas, aciertos
+10. si el acierto es mayor que el record, el record será igual al acierto
+11. En la siguiente ronda, se aumenta el numero de la secuencia, es decir, ahora el usuario tendrá que pulsar un botón de color más que en la ronda anterior y así sucesivamente
+12. Si el usuario gana, se vuelve al estado Inicio
+13. Si el usuario pierde, las rondas y aciertos se quedan en 0, pero el recors se mantiene. Se vuelve igualmente al estado Inicio
+14. La lógica la manejamos en los onclick de los botones de colores y en el boton start
+15. Cuando el usuario pulsa el start, se dispara el metodo de crear random y se pasa a otro estado
+16. Cuando el usuario pulsa algún botón de color, se comprueba si se acertó o no
+
+```bash
+#Ejemplo de onclick con los botones de colores
+ var _activo by remember { mutableStateOf(viewModel.estadoLiveData.value!!.botonesColoresActivos) }
+
+    viewModel.estadoLiveData.observe(LocalLifecycleOwner.current) {
+        _activo = viewModel.estadoLiveData.value!!.botonesColoresActivos
+    }
+
+    Button(
+        enabled = _activo,
+        onClick = {
+            viewModel.addColor(colorValor,listaColores, lista_Random)
+        }
+```
+En el ejemplo anterior, observamos que en el onclick, estamos llamando a un metodo del viewModel que añade un color
+
+
+### 8. Implementaciones adicionales a considerar en el futuro :smile:
+Que mejoras hacer en el futuro:
+1. implementar base de datos para guardar el record del usuario cuando salga de la aplicación
+2. implementar autenticación para entrar en el juego y guardar el alias junto al record del jugador
+3. Hacer que los botones de colores estén deshabilitados mientras están parpadeando
+4. Mejorar la apariencia de la aplicación
